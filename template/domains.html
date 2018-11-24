@@ -1,0 +1,15 @@
+{{define "title"}}Blank Template{{end}}
+{{define "head"}}{{end}}
+{{define "content"}}
+<table style="width:100%">
+    <tr>
+        <th>Domain</th>
+        <th>Rating</th>
+    </tr>
+    {{range .Domains}}
+        <td>{{.URL}}</td>
+        <td>{{.Rating}}</td>
+    {{end}}
+</table>
+{{end}}
+{{define "foot"}}{{end}}

@@ -11,7 +11,8 @@ type Domain struct {
 	Rating float32
 }
 
-func getAllDomains() ([]Domain, error) {
+// GetAll returns list of all tracked domains
+func GetAll() ([]Domain, error) {
 	var ret []Domain
 	tx, err := database.DB.Begin()
 	if err != nil {
