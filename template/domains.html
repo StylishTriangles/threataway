@@ -1,6 +1,46 @@
 {{define "title"}}Domain rating{{end}}
 {{define "head"}}{{end}}
 {{define "content"}}
+<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="contanier">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
 <table style="width:100%">
     <tr>
         <th></th>
@@ -17,7 +57,7 @@
 </table>
 
 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter2">
-        Add
+    Add
 </button>
 
 <!-- Button trigger modal -->
@@ -89,22 +129,24 @@
             name: name
         };
 
-		$.post("/domains/add", output, function(data) {
-			if (data != "") 
-				alert(data);
-			location.reload();
+        $.post("/domains/add", output, function (data) {
+            if (data != "")
+                alert(data);
+            location.reload();
 
-		});
+        }).fail(function (response) {
+            alert('Error: ' + response.responseText);
+        });;
     });
 
     $("#create_new_list").on("click", function () {
-		var checked_checkboxes = $( "input:checked" );
-		var ids = []
+        var checked_checkboxes = $("input:checked");
+        var ids = []
 
-		for (var i = 0; i < checked_checkboxes.length; i++) {
-			ids.push(checked_checkboxes[i].getAttribute("name"))
-		}
-        
+        for (var i = 0; i < checked_checkboxes.length; i++) {
+            ids.push(checked_checkboxes[i].getAttribute("name"))
+        }
+
         var name = $("#name").val();
 
         if (name == "") {
@@ -118,32 +160,36 @@
             name: name
         };
 
-		$.post("/domains/list", output, function(data) {
-			if (data != "") 
-				alert(data);
-			location.reload();
+        $.post("/domains/list", output, function (data) {
+            if (data != "")
+                alert(data);
+            location.reload();
 
-		});
+        }).fail(function (response) {
+            alert('Error: ' + response.responseText);
+        });;
     });
 
-    $("#delete").on("click", function() {
-		var checked_checkboxes = $( "input:checked" );
-		var ids = []
+    $("#delete").on("click", function () {
+        var checked_checkboxes = $("input:checked");
+        var ids = []
 
-		for (var i = 0; i < checked_checkboxes.length; i++) {
-			ids.push(checked_checkboxes[i].getAttribute("name"))
-		}
+        for (var i = 0; i < checked_checkboxes.length; i++) {
+            ids.push(checked_checkboxes[i].getAttribute("name"))
+        }
 
-		var output = {
-			ids: ids
-		};
+        var output = {
+            ids: ids
+        };
 
-		$.post("/domains/delete", output, function(data) {
-			if (data != "") 
-				alert(data);
-			location.reload();
+        $.post("/domains/delete", output, function (data) {
+            if (data != "")
+                alert(data);
+            location.reload();
 
-		});
-	});
+        }).fail(function (response) {
+            alert('Error: ' + response.responseText);
+        });;
+    });
 </script>
 {{end}}
