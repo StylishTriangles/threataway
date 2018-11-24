@@ -16,9 +16,17 @@
     {{end}}
 </table>
 
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter2">
+        Add
+</button>
+
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
     Create new list
+</button>
+
+<button type="button" class="btn btn-danger" data-toggle="modal" id="delete">
+    Delete
 </button>
 
 <!-- Modal -->
@@ -36,8 +44,30 @@
                 <input type="text" class="form-control" id="name" placeholder="Enter list name">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
                 <button type="button" id="create_new_list" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 2 -->
+<div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Enter URL</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="text" class="form-control" id="url" placeholder="URL / IP">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+                <button type="button" id="add_new_url" class="btn btn-primary">Add</button>
             </div>
         </div>
     </div>
@@ -46,6 +76,27 @@
 {{end}}
 {{define "foot"}}
 <script>
+    $("#add_new_url").on("click", function () {
+        var url = $("#url").val();
+
+        if (url == "") {
+            $("#url").addClass("is-invalid");
+        } else {
+            $("#url").removeClass("is-invalid");
+        }
+
+        var output = {
+            name: name
+        };
+
+		$.post("/domains/add", output, function(data) {
+			if (data != "") 
+				alert(data);
+			location.reload();
+
+		});
+    });
+
     $("#create_new_list").on("click", function () {
 		var checked_checkboxes = $( "input:checked" );
 		var ids = []
@@ -67,12 +118,32 @@
             name: name
         };
 
-		$.post("/lists", output, function(data) {
+		$.post("/domains/list", output, function(data) {
 			if (data != "") 
 				alert(data);
 			location.reload();
 
 		});
-    })
+    });
+
+    $("#delete").on("click", function() {
+		var checked_checkboxes = $( "input:checked" );
+		var ids = []
+
+		for (var i = 0; i < checked_checkboxes.length; i++) {
+			ids.push(checked_checkboxes[i].getAttribute("name"))
+		}
+
+		var output = {
+			ids: ids
+		};
+
+		$.post("/domains/delete", output, function(data) {
+			if (data != "") 
+				alert(data);
+			location.reload();
+
+		});
+	});
 </script>
 {{end}}
