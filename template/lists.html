@@ -1,0 +1,22 @@
+{{define "title"}}Listy{{end}}
+{{define "head"}}{{end}}
+{{define "content"}}
+<table style="width:100%">
+	<tr>
+		<th>Nazwa listy</th>
+		<th>Akcje</th>
+	</tr>
+	{{range .Lists}}
+	<tr>
+		<td>
+			<input type="checkbox" name="{{.listID}}" value="Bike"> 
+		<td>{{.Name}}</td>
+		<td>
+			<button>Edytuj</button>
+			<button>Usun</button>
+		</td>
+	</tr>
+	{{end}}
+</table>
+{{end}}
+{{define "foot"}}{{end}}

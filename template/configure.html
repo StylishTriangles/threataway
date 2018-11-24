@@ -1,0 +1,14 @@
+{{define "title"}}New configuration | GoYeah!{{end}}
+{{define "head"}}
+<link href="/static/css/stolen.css" media="screen" rel="stylesheet">
+{{end}}
+{{define "content"}}
+<h1>Add new list configuration:</h1>
+<form method="POST">
+    <label>configuration name:</label><br />
+    <input type="text" name="configurationname" value="{{if .Username}}{{.Username}}{{end}}">
+    <br/>
+</form>
+{{end}}
+{{define "foot"}}{{end}}
+
