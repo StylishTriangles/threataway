@@ -35,8 +35,11 @@
 			ids: ids
 		};
 
-		$.post("/lists", output, function() {
-			location.reload(); 
+		$.post("/lists", output, function(data) {
+			if (data != "") 
+				alert(data);
+			location.reload();
+
 		});
 	})
 </script>
