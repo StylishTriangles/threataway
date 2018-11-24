@@ -1,7 +1,7 @@
 from utils import *
 from bs4 import BeautifulSoup
 import requests
-
+import socket
 
 def talos_query(endpoint, domain, query_params):
   search_string = domain
@@ -39,9 +39,8 @@ def talos_query_wscore(query_string):
   )
 
 def talos(domain):
-  ipaddr='31.13.81.9'
-  #ipaddr=domain
-  #ipaddr='31.185.104.19'
+  ipaddr=socket.gethostbyname(domain)
+  #ipaddr='31.185.104.19'           malware
   blacklist = talos_query_blacklist(ipaddr)
   print(blacklist)
   print("********")
