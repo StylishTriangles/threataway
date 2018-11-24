@@ -2,6 +2,7 @@ package controller
 
 import (
 	"fmt"
+	"gowebapp/source/model/templates"
 	"gowebapp/source/model/validate"
 	"gowebapp/source/view"
 	"net/http"
@@ -15,31 +16,31 @@ func templateGET(w http.ResponseWriter, r *http.Request) {
 func templatePOST(w http.ResponseWriter, r *http.Request) {
 	//TODO: security
 	v := view.New("template")
-	v.Vars["Templatename"] = strings.TrimSpace(r.FormValue("templatename"))
+	v.Vars["Name"] = strings.TrimSpace(r.FormValue("name"))
 	v.Vars["Header"] = r.FormValue("header")
 	v.Vars["Footer"] = r.FormValue("footer")
-	if urlformat := r.FormValue("urlformat"); len(urlformat) > 0 {
-		v.Vars["Urlformat"] = urlformat
+	if urlTemplate := r.FormValue("urlTemplate"); len(urlTemplate) > 0 {
+		v.Vars["UrlTemplate"] = urlTemplate
 	} else {
-		v.Vars["Urlformat"] = "{URL}"
+		v.Vars["UrlTemplate"] = "{URL}"
 	}
 
-	// Validate templatename
+	// Validate name
 	errCount := 0
-	if ok, err := validate.Templatename(v.Vars["Templatename"].(string)); !ok {
+	if ok, err := validate.Name(v.Vars["Name"].(string)); !ok {
 		errCount++
 		switch err {
 		case validate.ErrEmpty:
-			v.Vars["TemplatenameModal"] = "This field is required"
+			v.Vars["NameModal"] = "This field is required"
 		}
 	}
-	if ok, err := validate.Urlformat(v.Vars["Urlformat"].(string)); !ok {
+	if ok, err := validate.UrlTemplate(v.Vars["UrlTemplate"].(string)); !ok {
 		errCount++
 		switch err {
 		case validate.ErrEmpty:
-			v.Vars["UrlformatModal"] = "This field is required"
+			v.Vars["UrlTemplateModal"] = "This field is required"
 		case validate.ErrInvalidFormat:
-			v.Vars["UrlformatModal"] = "This field must contain {URL}"
+			v.Vars["UrlTemplateModal"] = "This field must contain {URL}"
 		}
 	}
 
@@ -50,7 +51,7 @@ func templatePOST(w http.ResponseWriter, r *http.Request) {
 		// TODO: this is an ugly hack just to show the user how's his input looking like parsed
 		v2 := view.New("template_added")
 		v2.Vars = v.Vars
-		if urls := strings.Split(r.FormValue("urlformat"), "{URL}"); len(urls) == 2 {
+		if urls := strings.Split(v.Vars["UrlTemplate"].(string), "{URL}"); len(urls) == 2 {
 			prefix := urls[0]
 			suffix := urls[1]
 			preview := ""
@@ -58,6 +59,7 @@ func templatePOST(w http.ResponseWriter, r *http.Request) {
 				preview += prefix + url + suffix + "</br>"
 			}
 			v2.Vars["Urls"] = preview
+			templates.CreateNewTemplate(v.Vars["Name"].(string), v.Vars["Header"].(string), v.Vars["Footer"].(string), v.Vars["UrlTemplate"].(string))
 		}
 		v2.Render(w)
 	}
