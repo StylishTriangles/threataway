@@ -23,3 +23,9 @@ mysql_data/*
 
 #build
 gowebapp
+
+#python
+__pycache__*
+
+#plz
+*.swp
