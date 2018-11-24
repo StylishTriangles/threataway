@@ -50,4 +50,9 @@ func listsDeleteHandler(w http.ResponseWriter, r *http.Request) {
 		val, _ := strconv.Atoi(sid)
 		parsedIDs = append(parsedIDs, uint32(val))
 	}
+
+	err = lists.DeleteLists(parsedIDs, user.ID)
+	if err != nil {
+		log.Println(err.Error())
+	}
 }
