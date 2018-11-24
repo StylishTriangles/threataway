@@ -1,0 +1,5 @@
+{
+    "Host": "localhost",
+    "Port": 25,
+    "From": "Admin <no-reply@domain.org>"
+}

@@ -1,0 +1,18 @@
+{{define "title"}}Activate account | Pundex{{end}}
+{{define "head"}}{{end}}
+{{define "content"}}
+    {{if .InvalidKey}}
+        <h1>Account has already been activated or activation link is invalid.</h1>
+    {{else if .ExpiredKey}}
+        <h1>Activation link has expired</h1>
+    {{else}}
+    <h1>Account has been successfully activated!</h1>
+    <h2>You will be redirected to <a href="/login">login</a> page shortly.</h2>
+        <script>
+            setTimeout(function() {
+                window.location.replace("/login")
+            }, 3000);
+        </script>
+    {{end}}
+{{end}}
+{{define "foot"}}{{end}}

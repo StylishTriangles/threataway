@@ -1,0 +1,39 @@
+{{define "title"}}Register | Pundex{{end}}
+{{define "head"}}
+<link href="/static/css/stolen.css" media="screen" rel="stylesheet">
+{{end}}
+{{define "content"}}
+<h1>Register</h1>
+<form method="POST">
+    <label>Username:</label><br />
+    <input type="text" name="username" value="{{if .Username}}{{.Username}}{{end}}">
+    {{- if .UsernameModal}}
+    <label id="login-error" class="error" for="username" style="display: inline-block; color: red">{{.UsernameModal}}</label>
+    {{- end -}}
+    <br />
+
+    <label>Password:</label><br />
+    <input type="password" name="password">
+    {{- if .PasswordModal}}
+    <label id="auth-password-error" class="error" for="password" style="color: red">{{.PasswordModal}}</label>
+    {{- end -}}
+    <br />
+
+    <label>Repeat password:</label><br />
+    <input type="password" name="password2">
+    {{- if .Password2Modal}}
+    <label id="auth-password-confirm-error" class="error" for="password2" style="color: red">{{.Password2Modal}}</label>
+    {{- end -}}
+    <br/>
+
+    <label>Email:</label><br />
+    <input type="text" name="email" value="{{if .Email}}{{.Email}}{{end}}">
+    {{- if .EmailModal}}
+    <label id="email-error" class="error" for="email" style="color: red">{{.EmailModal}}</label>
+    {{- end -}}
+    <br />
+    <input type="submit">
+</form>
+{{end}}
+{{define "foot"}}{{end}}
+
