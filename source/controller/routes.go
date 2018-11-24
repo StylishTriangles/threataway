@@ -32,6 +32,7 @@ func GetRouter() *mux.Router {
 
 	r.HandleFunc("/", homeHandler)
 	r.HandleFunc("/forbidden", forbiddenHandler)
+	r.HandleFunc("/lists", listsHandler)
 	r.HandleFunc("/loggedin", loggedInHandler)
 	r.HandleFunc("/loggedout", loggedOutHandler)
 	r.HandleFunc("/login", loginGET).Methods("GET")
