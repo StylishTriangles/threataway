@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"regexp"
+	"strings"
 )
 
 // all lengths are in bytes
@@ -141,4 +142,26 @@ func isPasswordCommon(password string) (bool, error) {
 	}
 	_, exists := commonPasswords[password]
 	return exists, nil
+}
+
+func Configname(configname string) (bool, error) {
+	l := len(configname)
+
+	if l == 0 {
+		return false, ErrEmpty
+	}
+
+	return true, nil
+}
+
+func Urlformat(urlformat string) (bool, error) {
+	l := len(urlformat)
+	if l == 0 {
+		return false, ErrEmpty
+	}
+	if !strings.Contains(urlformat, "{url}") {
+		return false, ErrInvalidFormat
+	}
+
+	return true, nil
 }
