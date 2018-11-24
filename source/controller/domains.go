@@ -67,5 +67,7 @@ func domainsCreateList(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		log.Println(err.Error())
+		return
 	}
+	w.Write([]byte("Successfully created new list!"))
 }

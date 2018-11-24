@@ -78,7 +78,7 @@ func CreateNewList(domainIDs []uint32, name string, userID uint32) error {
 	}
 	defer stmt.Close()
 
-	res, err := stmt.Exec()
+	res, err := stmt.Exec(name, userID)
 	if err != nil {
 		return err
 	}
