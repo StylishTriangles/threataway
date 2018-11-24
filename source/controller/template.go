@@ -8,28 +8,28 @@ import (
 	"strings"
 )
 
-func configureGET(w http.ResponseWriter, r *http.Request) {
-	view.RenderTemplate(w, "configure", nil)
+func templateGET(w http.ResponseWriter, r *http.Request) {
+	view.RenderTemplate(w, "template", nil)
 }
 
-func configurePOST(w http.ResponseWriter, r *http.Request) {
-	v := view.New("configure")
-	v.Vars["Configname"] = strings.TrimSpace(r.FormValue("configname"))
+func templatePOST(w http.ResponseWriter, r *http.Request) {
+	v := view.New("template")
+	v.Vars["Templatename"] = strings.TrimSpace(r.FormValue("templatename"))
 	v.Vars["Header"] = r.FormValue("header")
 	v.Vars["Footer"] = r.FormValue("footer")
 	if urlformat := r.FormValue("urlformat"); len(urlformat) > 0 {
 		v.Vars["Urlformat"] = urlformat
 	} else {
-		v.Vars["Urlformat"] = "{url}"
+		v.Vars["Urlformat"] = "{URL}"
 	}
 
-	// Validate configname
+	// Validate templatename
 	errCount := 0
-	if ok, err := validate.Configname(v.Vars["Configname"].(string)); !ok {
+	if ok, err := validate.Templatename(v.Vars["Templatename"].(string)); !ok {
 		errCount++
 		switch err {
 		case validate.ErrEmpty:
-			v.Vars["ConfignameModal"] = "This field is required"
+			v.Vars["TemplatenameModal"] = "This field is required"
 		}
 	}
 	if ok, err := validate.Urlformat(v.Vars["Urlformat"].(string)); !ok {
@@ -38,7 +38,7 @@ func configurePOST(w http.ResponseWriter, r *http.Request) {
 		case validate.ErrEmpty:
 			v.Vars["UrlformatModal"] = "This field is required"
 		case validate.ErrInvalidFormat:
-			v.Vars["UrlformatModal"] = "This field must contain {url}"
+			v.Vars["UrlformatModal"] = "This field must contain {URL}"
 		}
 	}
 
@@ -48,8 +48,4 @@ func configurePOST(w http.ResponseWriter, r *http.Request) {
 	} else {
 		v.Render(w)
 	}
-}
-
-func configuredHandler(w http.ResponseWriter, r *http.Request) {
-	view.RenderTemplate(w, "configure", nil)
 }
