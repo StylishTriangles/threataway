@@ -144,7 +144,7 @@ func isPasswordCommon(password string) (bool, error) {
 	return exists, nil
 }
 
-func Configname(configname string) (bool, error) {
+func Templatename(configname string) (bool, error) {
 	l := len(configname)
 
 	if l == 0 {
@@ -159,7 +159,7 @@ func Urlformat(urlformat string) (bool, error) {
 	if l == 0 {
 		return false, ErrEmpty
 	}
-	if !strings.Contains(urlformat, "{url}") {
+	if !strings.Contains(urlformat, "{URL}") {
 		return false, ErrInvalidFormat
 	}
 
