@@ -145,6 +145,7 @@ func isPasswordCommon(password string) (bool, error) {
 }
 
 func Templatename(configname string) (bool, error) {
+	// TODO: make some real checking here
 	l := len(configname)
 
 	if l == 0 {
@@ -155,6 +156,7 @@ func Templatename(configname string) (bool, error) {
 }
 
 func Urlformat(urlformat string) (bool, error) {
+	// TODO: and there
 	l := len(urlformat)
 	if l == 0 {
 		return false, ErrEmpty
