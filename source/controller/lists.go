@@ -1,12 +1,12 @@
 package controller
 
 import (
-	"encoding/json"
 	"gowebapp/source/model/lists"
 	"gowebapp/source/model/user"
 	"gowebapp/source/view"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 func listsHandler(w http.ResponseWriter, r *http.Request) {
@@ -24,7 +24,8 @@ func listsHandler(w http.ResponseWriter, r *http.Request) {
 func listsDeleteHandler(w http.ResponseWriter, r *http.Request) {
 	// Check if user has write permissions
 	session, err := store.Get(r, "session")
-	if err != nil || !session.Values["authenticated"].(bool) {
+	auth, ok := session.Values["authenticated"]
+	if err != nil || !ok || !auth.(bool) {
 		http.Error(w, "Please log in to view this page", 403)
 		return
 	}
@@ -39,11 +40,14 @@ func listsDeleteHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Delete lists with specified IDs provided via json from frontend
-	jsonData := r.FormValue("ids")
-	dummy := struct {
-		ids []uint32
-	}{}
-	log.Println(jsonData) // Debug
-	json.Unmarshal([]byte(jsonData), &dummy)
-
+	r.ParseForm()
+	ids, ok := r.Form["ids"]
+	if !ok {
+		http.Error(w, "Invalid request", 500)
+	}
+	var parsedIDs []uint32
+	for _, sid := range ids {
+		val, _ := strconv.Atoi(sid)
+		parsedIDs = append(parsedIDs, uint32(val))
+	}
 }
