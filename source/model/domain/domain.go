@@ -21,7 +21,7 @@ func GetAll() ([]Domain, error) {
 	defer tx.Rollback()
 
 	// Check if username already exists in db
-	stmt, err := tx.Prepare("SELECT * FROM urls")
+	stmt, err := tx.Prepare("SELECT idUrl, domain, rating FROM urls")
 	if err != nil {
 		return nil, err
 	}
