@@ -1,36 +1,10 @@
-version: '2.1'
-
-services:
-  mysql:
-    container_name: mysql
-    restart: always
-    image: mysql:latest
-    environment:
-      MYSQL_ROOT_PASSWORD: go_hack_me_now
-      MYSQL_USER: root
-      MYSQL_PASS: go_hack_me_now
-    volumes:
-      - ./mysql_data:/var/lib/mysql
-    ports:
-      - "3306:3306"
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    links:
-      - mysql:mysql
-    ports:
-      - 8081:80
-    environment:
-      MYSQL_USERNAME: root
-      MYSQL_ROOT_PASSWORD: go_hack_me_now
-      MYSQL_PASS: go_hack_me_now
-
 version: '2'
 services:
   db:
     image: mysql
     environment:
       MYSQL_ROOT_PASSWORD: go_hack_me_now
-      MYSQL_USER: gowebapp
+      MYSQL_USER: root
       MYSQL_PASS: go_hack_me_now
     volumes:
       - ./mysql_data:/var/lib/mysql
@@ -45,6 +19,6 @@ services:
     ports:
       - 8081:80
     environment:
-      MYSQL_USERNAME: gowebapp
+      MYSQL_USERNAME: root
       MYSQL_ROOT_PASSWORD: go_hack_me_now
       MYSQL_PASS: go_hack_me_now
