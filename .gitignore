@@ -16,3 +16,6 @@
 # Protected files
 *.secret
 secret-dir/*
+
+# Mysql database
+mysql_data/*
