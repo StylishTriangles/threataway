@@ -15,7 +15,8 @@ func listsHandler(w http.ResponseWriter, r *http.Request) {
 	lists, err := lists.GetAllLists()
 
 	if err != nil {
-		http.Error(w, "There was an error processing your request"+err.Error(), 500)
+		http.Error(w, "There was an error processing your request "+err.Error(), 500)
+		return
 	}
 
 	v.Vars["Lists"] = lists
