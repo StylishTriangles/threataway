@@ -19,3 +19,6 @@ secret-dir/*
 
 # Mysql database
 mysql_data/*
+
+#build
+gowebapp
