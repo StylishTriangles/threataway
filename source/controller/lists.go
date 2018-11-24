@@ -62,5 +62,5 @@ func listsDeleteHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err.Error())
 	}
-	w.Write([]byte(fmt.Sprintf("Deleted %i records", deleted)))
+	w.Write([]byte(fmt.Sprintf("Deleted %d records", deleted)))
 }
