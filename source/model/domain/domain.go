@@ -2,6 +2,8 @@ package domain
 
 import (
 	"gowebapp/source/shared/database"
+
+	"github.com/weppos/publicsuffix-go/publicsuffix"
 )
 
 // Domain represents a single domain in database
@@ -41,4 +43,13 @@ func GetAll() ([]Domain, error) {
 
 	tx.Commit()
 	return ret, nil
+}
+
+// RegisterNew creates a new database record for given domain
+func RegisterNew(domain string) error {
+	domain, err := publicsuffix.Domain(domain)
+	if err != nil {
+		return err
+	}
+	return nil
 }
