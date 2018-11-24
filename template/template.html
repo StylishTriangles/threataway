@@ -1,0 +1,33 @@
+{{define "title"}}New template | GoYeah!{{end}}
+{{define "head"}}
+<link href="/static/css/stolen.css" media="screen" rel="stylesheet">
+{{end}}
+{{define "content"}}
+<h1>Add new list template:</h1>
+<form method="POST">
+    <label>Template name:</label><br />
+    <input type="text" name="templatename" value="{{if .Templatename}}{{.Templatename}}{{end}}">
+    {{- if .TemplatenameModal}}
+    <label id="template-name-error" class="error" for="templatename" style="color: red">{{.TemplatenameModal}}</label>
+    {{- end -}}
+    <br />
+
+    <label>Header:</label><br />
+    <input type="text" name="header" value="{{if .Header}}{{.Header}}{{end}}">
+    <br />
+
+    <label>Footer:</label><br />
+    <input type="text" name="footer" value="{{if .Footer}}{{.Footer}}{{end}}">
+    <br />
+
+    <label>URL format:</label><br />
+    <input type="text" name="urlformat" value="{{if .Urlformat}}{{.Urlformat}}{{else}}{URL}{{end}}">
+    {{- if .UrlformatModal}}
+    <label id="url-format-error" class="error" for="Urlformat" style="color: red">{{.UrlformatModal}}</label>
+    {{- end -}}
+    <br />
+
+    <input type="submit">
+</form>
+{{end}}
+{{define "foot"}}{{end}}

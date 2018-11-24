@@ -3,17 +3,21 @@
 {{define "content"}}
 <table style="width:100%">
 	<tr>
-		<th>Nazwa listy</th>
-		<th>Akcje</th>
+		<th></th>
+		<th>URL</th>
+		<th>Lista</th>
+		<th>Szablon</th>
+		<th>Pelny adres URL</th>
 	</tr>
-	{{range .Lists}}
+	{{range .DeployedLists}}
 	<tr>
+		<td><input type="checkbox" name="{{.ID}}"></td> 
+		<td>{{.URL}}</td>
+		<td>{{.ListName}}</td>
+		<td>{{.TemplateName}}</td>
 		<td>
-			<input type="checkbox" name="{{.ID}}"> 
-		<td>{{.Name}}</td>
-		<td>
-			<button>Edytuj</button>
-			<button>Usun</button>
+			<button">Edytuj</button>
+			<button  name="{{.ID}}">Usun</button>
 		</td>
 	</tr>
 	{{end}}
