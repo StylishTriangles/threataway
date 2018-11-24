@@ -1,0 +1,12 @@
+mysql:
+  container_name: mysql
+  restart: always
+  image: mysql:latest
+  environment:
+    MYSQL_ROOT_PASSWORD: 'test_pass'
+    MYSQL_USER: 'test'
+    MYSQL_PASS: 'pass'
+  volumes:
+    - ./mysql_data:/var/lib/mysql
+  ports:
+    - "3306:3306"
