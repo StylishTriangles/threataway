@@ -45,6 +45,11 @@ func GetAll() ([]Domain, error) {
 	return ret, nil
 }
 
-func RegisterNew(domain string) {
-	domain = publicsuffix.PublicSuffix
+// RegisterNew creates a new database record for given domain
+func RegisterNew(domain string) error {
+	domain, err := publicsuffix.Domain(domain)
+	if err != nil {
+		return err
+	}
+	return nil
 }
