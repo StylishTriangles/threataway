@@ -45,17 +45,20 @@ func GetAllLists() ([]List, error) {
 }
 
 // DeleteLists deletes provided list IDs from DB
-func DeleteLists(listIDs []uint32, userID uint32) error {
+func DeleteLists(listIDs []uint32, userID uint32) (int, error) {
+	deleted := 0
 	for _, v := range listIDs {
-		stmt, err := database.DB.Prepare(`DELETE FROM lists WHERE listId = ? AND ownerID = ?`)
+		stmt, err := database.DB.Prepare(`DELETE FROM lists WHERE idList = ? AND ownerID = ?`)
 		if err != nil {
-			return err
+			return deleted, err
 		}
-		defer stmt.Close()
-		_, err = stmt.Exec(v, userID)
+		res, err := stmt.Exec(v, userID)
+		stmt.Close()
 		if err != nil {
-			return err
+			return deleted, err
 		}
+		v, _ := res.RowsAffected()
+		deleted += int(v)
 	}
-	return nil
+	return deleted, nil
 }
