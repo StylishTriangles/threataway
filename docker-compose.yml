@@ -1,24 +1,11 @@
 version: '2'
 services:
-  db:
-    image: mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: go_hack_me_now
-      MYSQL_USER: root
-      MYSQL_PASS: go_hack_me_now
-    volumes:
-      - ./mysql_data:/var/lib/mysql
-    ports:
-      - "3306:3306"
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    links:
-      - db:mysql
-    depends_on:
-      - db
     ports:
       - 8081:80
     environment:
-      MYSQL_USERNAME: root
+      PMA_HOST: 10.250.195.52
+      MYSQL_USERNAME: gowebapp
       MYSQL_ROOT_PASSWORD: go_hack_me_now
       MYSQL_PASS: go_hack_me_now
