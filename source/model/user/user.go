@@ -34,6 +34,7 @@ type User struct {
 	LastName     string    `db:"lastName"`
 	LastLogin    time.Time `db:"lastLogin"`
 	Active       uint8     `db:""`
+	Role         uint8     `db:""`
 }
 
 // New creates new user
@@ -159,7 +160,7 @@ func Register(login, email, passwd string) error {
 	tm := time.Now()
 	// Insert new user into DB
 	// IMPORTANT! Accounts will always start activated
-	stmt2, err := tx.Prepare("INSERT INTO users(login, email, password, createDate, active) VALUES(?, ?, ?, ?, 1)")
+	stmt2, err := tx.Prepare("INSERT INTO users(login, email, password, createDate, active, role) VALUES(?, ?, ?, ?, 1, 0)")
 	if err != nil {
 		return err
 	}
@@ -201,7 +202,7 @@ func Register(login, email, passwd string) error {
 // An error (ErrNotFound) is returned, when user was not found in DB
 func GetByHandle(emailOrLogin string) (*User, error) {
 	stmt, err := database.DB.Prepare(`
-SELECT idUser, login, email, password, firstName, lastName, active
+SELECT idUser, login, email, password, firstName, lastName, active, role
 FROM users
 WHERE email = ? or login = ?`)
 	if err != nil {
@@ -210,7 +211,7 @@ WHERE email = ? or login = ?`)
 	defer stmt.Close()
 	u := New()
 	err = stmt.QueryRow(emailOrLogin, emailOrLogin).
-		Scan(&u.ID, &u.Login, &u.Email, &u.PasswordHash, &u.FirstName, &u.LastName, &u.Active)
+		Scan(&u.ID, &u.Login, &u.Email, &u.PasswordHash, &u.FirstName, &u.LastName, &u.Active, &u.Role)
 	if err != nil {
 		return nil, ErrNotFound
 	}
