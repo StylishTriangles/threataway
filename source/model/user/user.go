@@ -201,7 +201,7 @@ func Register(login, email, passwd string) error {
 // An error (ErrNotFound) is returned, when user was not found in DB
 func GetByHandle(emailOrLogin string) (*User, error) {
 	stmt, err := database.DB.Prepare(`
-SELECT idUser, login, email, password, firstName, lastName, active,
+SELECT idUser, login, email, password, firstName, lastName, active
 FROM users
 WHERE email = ? or login = ?`)
 	if err != nil {
