@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"gowebapp/source/model/lists"
 	"gowebapp/source/model/user"
 	"gowebapp/source/view"
@@ -57,8 +58,9 @@ func listsDeleteHandler(w http.ResponseWriter, r *http.Request) {
 		parsedIDs = append(parsedIDs, uint32(val))
 	}
 
-	err = lists.DeleteLists(parsedIDs, user.ID)
+	deleted, err := lists.DeleteLists(parsedIDs, user.ID)
 	if err != nil {
 		log.Println(err.Error())
 	}
+	w.Write([]byte(fmt.Sprintf("Deleted %i records", deleted)))
 }
