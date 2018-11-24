@@ -10,3 +10,14 @@ mysql:
     - ./mysql_data:/var/lib/mysql
   ports:
     - "3306:3306"
+phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+          PMA_ARBITRARY: 1
+          MYSQL_USER: test
+          MYSQL_PASSWORD: pass
+          MYSQL_ROOT_PASSWORD: test_pass
+    ports:
+          - "8081:80"
+    links:
+          - "mysql:mysql"
