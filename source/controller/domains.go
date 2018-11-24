@@ -2,6 +2,7 @@ package controller
 
 import (
 	"gowebapp/source/model/domain"
+	"gowebapp/source/model/lists"
 	"gowebapp/source/model/user"
 	"gowebapp/source/view"
 	"log"
@@ -62,9 +63,9 @@ func domainsCreateList(w http.ResponseWriter, r *http.Request) {
 		parsedIDs = append(parsedIDs, uint32(val))
 	}
 
-	// deleted, err := lists.DeleteLists(parsedIDs, user.ID)
-	// if err != nil {
-	// 	log.Println(err.Error())
-	// }
-	// w.Write([]byte(fmt.Sprintf("Deleted %d records", deleted)))
+	err = lists.CreateNewList(parsedIDs, r.FormValue("name"), user.ID)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		log.Println(err.Error())
+	}
 }
