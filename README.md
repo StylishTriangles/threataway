@@ -9,6 +9,6 @@ Aby aplikacja dzialala niezbedne jest srodowisko python 3 z blibliotekami:
 Projekt jest napisany w jezykach go (backend), mysql (baza danych) ,html5,css,js (frontend) i python (parsowanie stron z informacjami o niebezpieczenstwie). 
 Aby skompilwoac projekt nalezy wywolac komende 
 ```bash
-go build
+[admin@linux gowebapp]$ go build
 ```
 z katalogu glownego projektu.
