@@ -43,11 +43,14 @@ def main():
       talos(domains, con)  
     elif service == "shodan":
       query_shodan(domains, con)
+    elif service == "all":
+      query_shodan(domains, con)
+      talos(domains, con)
     else:
       print("unknown service")
       sys.exit(-2)
   else:
-    #talos(domains, con)
+    talos(domains, con)
     query_shodan(domains, con)
   con.close()
      
