@@ -5,10 +5,12 @@ import (
 	"gowebapp/source/model/domain"
 	"gowebapp/source/model/lists"
 	"gowebapp/source/model/user"
+	"gowebapp/source/shared/database"
 	"gowebapp/source/view"
 	"log"
 	"net/http"
 	"os/exec"
+	"path/filepath"
 	"regexp"
 	"strconv"
 	"strings"
@@ -88,14 +90,22 @@ func domainsAdd(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Write([]byte(fmt.Sprintf("Successfully added %s, assessment will be available shortly.", domainName)))
 
-	cmd := exec.Command("python", "main.py "+""+domainName)
-	cmd.Dir = "./scrappers"
-	log.Println("Updating " + domainName)
-	_, err = cmd.CombinedOutput()
+	stmt, err := database.DB.Prepare(`SELECT idUrl FROM urls WHERE domain = ?`)
 	if err != nil {
-		log.Fatalf("cmd.Run() failed with %s\n", err)
+		return
 	}
+	defer stmt.Close()
 
+	var id uint32
+
+	stmt.QueryRow(domainName).Scan(&id)
+
+	path, _ := filepath.Abs("./scrappers")
+
+	cmd := exec.Command("python", "main.py", fmt.Sprintf("%v", id), domainName)
+	cmd.Dir = path
+	log.Println("Updating " + domainName)
+	go cmd.Run()
 }
 
 func domainsCreateList(w http.ResponseWriter, r *http.Request) {
