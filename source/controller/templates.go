@@ -11,6 +11,10 @@ import (
 )
 
 func templatesHandler(w http.ResponseWriter, r *http.Request) {
+	if !checkAuth(w, r) {
+		return
+	}
+
 	v := view.New("templates")
 	templates, err := templates.GetAllTemplates()
 

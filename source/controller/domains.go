@@ -20,7 +20,10 @@ var ipShort = regexp.MustCompile(`^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])
 var illegalDomainChars = regexp.MustCompile("[;/?:@=&]")
 
 func domainsGET(w http.ResponseWriter, r *http.Request) {
-	// TODO: SECURITY!!!!
+	if !checkAuth(w, r) {
+		return
+	}
+
 	v := view.New("domains")
 	domains, err := domain.GetAll()
 	if err != nil {

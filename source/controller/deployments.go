@@ -17,6 +17,10 @@ import (
 var urlRegex = regexp.MustCompile(`^[a-zA-Z0-9_\-+]+$`)
 
 func deploymentsHandler(w http.ResponseWriter, r *http.Request) {
+	if !checkAuth(w, r) {
+		return
+	}
+
 	v := view.New("deployments")
 	deployments, err := deployments.GetAllDeployments()
 	lists, err := lists.GetAllLists()

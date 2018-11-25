@@ -9,9 +9,12 @@ import (
 )
 
 func displayListGET(w http.ResponseWriter, r *http.Request) {
+	if !checkAuth(w, r) {
+		return
+	}
+
 	mp := mux.Vars(r)
 
-	// TODO: SECURITY!!!!
 	v := view.New("displayList")
 	domains, err := domain.GetFromList(mp["list_name"])
 	if err != nil {

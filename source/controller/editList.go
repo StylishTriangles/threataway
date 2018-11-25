@@ -14,7 +14,10 @@ import (
 )
 
 func editListGET(w http.ResponseWriter, r *http.Request) {
-	// TODO: SECURITY!!!!
+	if !checkAuth(w, r) {
+		return
+	}
+
 	mp := mux.Vars(r)
 	v := view.New("editList")
 	domains, err := domain.GetAll()
