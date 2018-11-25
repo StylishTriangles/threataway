@@ -34,8 +34,11 @@
 				<button type="button" class="btn btn-danger" id="delete">
 					Delete
 				</button>
-				<a href="/login" type="button" class="btn" id="delete">
+				<a href="/login" type="button" class="btn">
 					Login
+				</a>
+				<a href="/register" type="button" class="btn">
+					Add user
 				</a>
 			</form>
 		</div>
@@ -178,11 +181,8 @@
 
 	var actual_editing = -1;
 
-	$(".button-edit").on("click", function (btn) {
-		var template_id = btn.getAttribute("data-id");
-		
-		alert("aa");
-		return;
+	$(".button-edit").on("click", function () {
+		var template_id = $(this).data("id")
 
 		var output = {
 			template_id: template_id

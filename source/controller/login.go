@@ -46,7 +46,7 @@ func loginPOST(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	http.Redirect(w, r, "/loggedin", http.StatusFound)
+	http.Redirect(w, r, "/domains", http.StatusFound)
 }
 
 func logoutHandler(w http.ResponseWriter, r *http.Request) {
