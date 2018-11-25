@@ -51,8 +51,6 @@
             <td>{{.URL}}</td>
             <td>{{.Rating}}</td>
             <!-- Icon made by https://www.flaticon.com/authors/srip licensed by CC 3.0 BY -->
-            <td>{{.Rating}}</td>
-            <!-- Icon made by https://www.flaticon.com/authors/srip licensed by CC 3.0 BY -->
             <td>{{if (ge .Rating  7.0)}}<img src="/static/image/safe.png" height="30" title="Secure">
             <!-- Icon made by https://www.flaticon.com/authors/twitter licensed by CC 3.0 BY -->
                 {{else}}{{if (ge .Rating  4.0)}}<img src="/static/image/warning.png" height="30" title="Untrusted">
