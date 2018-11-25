@@ -56,6 +56,7 @@ func GetRouter() *mux.Router {
 
 	r.HandleFunc("/domains", domainsGET).Methods("GET")
 	r.HandleFunc("/domains/list", domainsCreateList).Methods("POST")
+	r.HandleFunc("/templates/add", templateCreate).Methods("POST")
 
 	r.PathPrefix("/static/").Handler(
 		http.StripPrefix("/static/", http.FileServer(http.Dir("static/"))))

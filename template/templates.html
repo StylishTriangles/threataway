@@ -90,13 +90,17 @@
 		var header = $("#header").val();
 		var footer = $("#footer").val();
 		var urlTemplate = $("#urlTemplate").val();
-		
-
 
 		if (name == "") {
 			$("#name").addClass("is-invalid");
 		} else {
 			$("#name").removeClass("is-invalid");
+		}
+		
+		if (!urlTemplate.includes("{URL}")) {
+			$("#urlTemplate").addClass("is-invalid");
+		} else {
+			$("#urlTemplate").removeClass("is-invalid");
 		}
 
 		var output = {
@@ -106,9 +110,7 @@
 			urlTemplate: urlTemplate
 		};
 
-		//	What now?
-
-		$.post("/domains/list", output, function (data) {
+		$.post("/templates/add", output, function (data) {
 			if (data != "")
 				alert(data);
 			location.reload();
