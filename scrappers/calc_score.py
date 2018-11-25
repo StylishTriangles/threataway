@@ -41,7 +41,6 @@ def calc_score(rows):
   
 
 def update_score(con, _id):
-  print(_id)
   cur = con.cursor()
   query = "SELECT rating, malicious, malicious_type, web_score_name, email_score_name, monthly_spam_level, honeypot_score, shodan_malware, shodan_creds  FROM urls WHERE idUrl=%s"
   cur.execute(query, _id)
@@ -50,5 +49,6 @@ def update_score(con, _id):
 
   cur = con.cursor()
   update_query='UPDATE urls SET rating=%s  WHERE idUrl=%s'
-  cur.execute(update_query, (new_score, _id))
+  updated = cur.execute(update_query, (new_score, _id))
   con.commit()
+  return updated
