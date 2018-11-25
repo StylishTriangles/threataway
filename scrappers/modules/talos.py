@@ -73,6 +73,4 @@ def talos(list_id_domain, con, lazy_rating=1):
     if lazy_rating == 0 or changed != 0:
       if update_score(con, domain_id) != 0:
         ret_list.append(domain_id)
-  print("ret_list")
-  print(ret_list)
   return ret_list
