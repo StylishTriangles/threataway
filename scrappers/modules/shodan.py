@@ -11,7 +11,7 @@ def query_honeypot_score(ipaddr, key):
   url = "https://api.shodan.io/labs/honeyscore/"+ipaddr+"?key="+key
   return requests.get(url).text
 
-def query_shodan(list_id_domain, con):
+def query_shodan(list_id_domain, con, lazy_rating=1):
   with open('../secret-dir/shodan.key', 'r') as f:
     key=f.read().replace('\n', '')
   api = Shodan(key)
@@ -70,5 +70,5 @@ def query_shodan(list_id_domain, con):
     cur = con.cursor()
     changed = cur.execute(update_query, tuple(list(res.values())) + (domain_id,))
     con.commit()
-    if changed != 0:
+    if lazy_rating == 0 or changed != 0:
       update_score(con, domain_id)
