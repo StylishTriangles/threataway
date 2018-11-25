@@ -39,8 +39,8 @@ func listsDeleteHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if user.Role < 1 {
-		log.Println("Insufficient permisions (you need write access to perform this action")
-		http.Error(w, "Insufficient permisions (you need write access to perform this action", 403)
+		log.Println("Insufficient permisions (you need write access to perform this action)")
+		http.Error(w, "Insufficient permisions (you need write access to perform this action)", 403)
 		return
 	}
 
@@ -48,7 +48,7 @@ func listsDeleteHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	ids, ok := r.Form["ids[]"]
 	if !ok {
-		http.Error(w, "Invalid request", 500)
+		http.Error(w, "Invalid request", 400)
 		log.Println("Invalid request")
 		log.Println(r.Form)
 		return
@@ -62,6 +62,8 @@ func listsDeleteHandler(w http.ResponseWriter, r *http.Request) {
 	deleted, err := lists.DeleteLists(parsedIDs, user.ID)
 	if err != nil {
 		log.Println(err.Error())
+		http.Error(w, err.Error(), 500)
+		return
 	}
 	w.Write([]byte(fmt.Sprintf("Deleted %d records", deleted)))
 }

@@ -2,8 +2,6 @@ package domain
 
 import (
 	"gowebapp/source/shared/database"
-
-	"github.com/weppos/publicsuffix-go/publicsuffix"
 )
 
 // Domain represents a single domain in database
@@ -47,9 +45,35 @@ func GetAll() ([]Domain, error) {
 
 // RegisterNew creates a new database record for given domain
 func RegisterNew(domain string) error {
-	domain, err := publicsuffix.Domain(domain)
+	stmt, err := database.DB.Prepare("INSERT INTO urls(domain) VALUES(?)")
 	if err != nil {
 		return err
 	}
-	return nil
+	defer stmt.Close()
+
+	_, err = stmt.Exec(domain)
+
+	return err
+}
+
+// DeleteDomains deletes provided domainIDs from database
+func DeleteDomains(domainIDs []uint32) error {
+	tx, err := database.DB.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+	for _, v := range domainIDs {
+		stmt, err := tx.Prepare(`DELETE FROM urls WHERE idUrl = ?`)
+		if err != nil {
+			return err
+		}
+		_, err = stmt.Exec(v)
+		if err != nil {
+			stmt.Close()
+			return err
+		}
+		stmt.Close()
+	}
+	return tx.Commit()
 }
