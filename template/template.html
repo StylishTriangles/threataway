@@ -6,9 +6,9 @@
 <h1>Add new list template:</h1>
 <form method="POST">
     <label>Template name:</label><br />
-    <input type="text" name="templatename" value="{{if .Templatename}}{{.Templatename}}{{end}}">
-    {{- if .TemplatenameModal}}
-    <label id="template-name-error" class="error" for="templatename" style="color: red">{{.TemplatenameModal}}</label>
+    <input type="text" name="name" value="{{if .Name}}{{.Name}}{{end}}">
+    {{- if .NameModal}}
+    <label id="template-name-error" class="error" for="name" style="color: red">{{.NameModal}}</label>
     {{- end -}}
     <br />
 
@@ -21,9 +21,9 @@
     <br />
 
     <label>URL format:</label><br />
-    <input type="text" name="urlformat" value="{{if .Urlformat}}{{.Urlformat}}{{else}}{URL}{{end}}">
-    {{- if .UrlformatModal}}
-    <label id="url-format-error" class="error" for="Urlformat" style="color: red">{{.UrlformatModal}}</label>
+    <input type="text" name="urlTemplate" value="{{if .UrlTemplate}}{{.UrlTemplate}}{{else}}{URL}{{end}}">
+    {{- if .UrlTemplateModal}}
+    <label id="url-format-error" class="error" for="UrlTemplate" style="color: red">{{.UrlTemplateModal}}</label>
     {{- end -}}
     <br />
 

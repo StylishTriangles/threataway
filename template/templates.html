@@ -1,4 +1,4 @@
-{{define "title"}}Listy{{end}}
+{{define "title"}}Szablony{{end}}
 {{define "head"}}{{end}}
 {{define "content"}}
 <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
@@ -16,16 +16,16 @@
 				<li class="nav-item">
 					<a class="nav-link" href="/domains">Domains</a>
 				</li>
-				<li class="nav-item active">
+				<li class="nav-item">
 					<a class="nav-link" href="/lists">Lists</a>
 				</li>
-				<li class="nav-item">
+				<li class="nav-item active">
 					<a class="nav-link" href="/templates">Templates</a>
 				</li>
 			</ul>
 			<form class="form-inline my-2 my-lg-0">
 				<a type="create" class="btn btn-success mr-2" href="/domains">
-					New list
+					New template
 				</a>
 				<button type="button" class="btn btn-danger" id="delete">
 					Delete
@@ -42,18 +42,17 @@
 	<table class="table">
 		<tr class="thead-dark">
 			<th></th>
-			<th>Nazwa listy</th>
+			<th>Nazwa szablonu</th>
 			<th>Akcje</th>
 		</tr>
-		{{range .Lists}}
+		{{range .Templates}}
 		<tr>
 			<td>
 				<input type="checkbox" name="{{.ID}}">
 			<td>{{.Name}}</td>
-			<td>
-				<button class="btn">Edytuj</button>
-				<button class="btn">Usun</button>
-			</td>
+			<td>{{.Header}}</td>
+			<td>{{.Footer}}</td>
+			<td>{{.UrlTemplate}}</td>
 		</tr>
 		{{end}}
 	</table>
@@ -73,7 +72,7 @@
 			ids: ids
 		};
 
-		$.post("/lists", output, function (data) {
+		$.post("/templates", output, function (data) {
 			if (data != "")
 				alert(data);
 			location.reload();
