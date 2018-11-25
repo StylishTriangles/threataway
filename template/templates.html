@@ -46,10 +46,10 @@
 	<table class="table">
 		<tr class="thead-dark">
 			<th></th>
-			<th>Nazwa szablonu</th>
-			<th>Nagłówek</th>
-			<th>Stopka</th>
-			<th>Szablon URL</th>
+			<th>Template name</th>
+			<th>Header</th>
+			<th>Footer</th>
+			<th>URL template</th>
 		</tr>
 		{{range .Templates}}
 		<tr>
@@ -69,16 +69,16 @@
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLongTitle">Enter Title name</h5>
+				<h5 class="modal-title" id="exampleModalLongTitle">Create new template</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
-				<input type="text" class="form-control" id="name" placeholder="Enter template name">
-				<input type="text" class="form-control" id="header" placeholder="Enter header">
-				<input type="text" class="form-control" id="footer" placeholder="Enter footer">
-				<input type="text" class="form-control" id="urlTemplate" placeholder="Enter prefix{URL}suffix">
+				<input type="text" class="form-control mb-3" id="name" placeholder="Enter template name">
+				<textarea class="form-control mb-3" id="header" rows="5" placeholder="Enter header"></textarea>
+				<textarea class="form-control mb-3" id="footer" rows="5" placeholder="Enter footer"></textarea>
+				<textarea class="form-control" id="urlTemplate" rows="5" placeholder="Enter prefix{URL}suffix"></textarea>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
@@ -142,7 +142,9 @@
 				alert(data);
 			location.reload();
 
-		});
+		}).fail(function (response) {
+			alert('Error: ' + response.responseText);
+		});;
 	});
 </script>
 {{end}}

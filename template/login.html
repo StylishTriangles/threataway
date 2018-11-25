@@ -108,6 +108,12 @@
     <label for="auth-password" class="sr-only">Password</label>
     <input type="password" class="form-control" id="auth-password" name="password" type="password" placeholder="Password"
       required>
+
+    {{if .LoginFailure}}
+    <span class="text-danger">Incorrect login or password</span>
+    {{end}}
+
+
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
     <p class="mt-5 mb-3 text-muted">Best team &copy; 2018</p>
   </div>

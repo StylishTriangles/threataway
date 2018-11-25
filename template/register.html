@@ -1,8 +1,9 @@
 {{define "title"}}Register | GoYeah!{{end}}
 {{define "head"}}
-<link href="/static/css/stolen.css" media="screen" rel="stylesheet">
+<link href="/static/css/signin.css" rel="stylesheet">
 {{end}}
 {{define "content"}}
+<!--
 <h1>Register</h1>
 <form method="POST">
     <label>Username:</label><br />
@@ -24,7 +25,7 @@
     {{- if .Password2Modal}}
     <label id="auth-password-confirm-error" class="error" for="password2" style="color: red">{{.Password2Modal}}</label>
     {{- end -}}
-    <br/>
+    <br />
 
     <label>Email:</label><br />
     <input type="text" name="email" value="{{if .Email}}{{.Email}}{{end}}">
@@ -33,7 +34,77 @@
     {{- end -}}
     <br />
     <input type="submit">
+</form> -->
+
+<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="/static/image/orlen_logo.png" height="30" alt="">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/domains">Domains</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/lists">Lists</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/templates">Templates</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/deployments">Deployments</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+            </form>
+        </div>
+    </div>
+</nav>
+
+
+<form class="form-signin" method="POST" data-remote="true" novalidate="novalidate">
+
+    <div class="text-center">
+        <div style="display:none"><input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden"
+                value="/2Z+pSBIRadBTwILLydY0kHBQsZ7wqgCWjSqZmU9y/0="></div>
+        <input type="hidden" id="redirect-after-login" name="redirect">
+        <img class="mb-4" src="/static/image/orlen_logo.png" alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">Create new user</h1>
+        <label for="login" class="sr-only">Username</label>
+        <input type="text" class="form-control" id="username" name="username" autocomplete="off" type="text"
+            placeholder="Username" value="{{if .Username}}{{.Username}}{{end}}" required autofocus>
+        {{- if .UsernameModal}}
+        <label for="username" class="text-danger">{{.UsernameModal}}</label>
+        {{- end -}}
+        <label for="password" class="sr-only">Password</label>
+        <input type="password" class="form-control" id="password" name="password" type="password" placeholder="Password"
+            required>
+        {{- if .PasswordModal}}
+        <label for="password" class="text-danger">{{.PasswordModal}}</label>
+        {{- end -}}
+        <label for="password2" class="sr-only">Repeat password</label>
+        <input type="password" class="form-control" id="password2" name="password2" type="password" placeholder="Repeat password"
+            required>
+        {{- if .Password2Modal}}
+        <label for="password2" class="text-danger">{{.Password2Modal}}</label>
+        {{- end -}}
+        <label for="email" class="sr-only">Email</label>
+        <input type="email" class="form-control" id="email" name="email" autocomplete="off" placeholder="Email" value="{{if .Email}}{{.Email}}{{end}}"
+            required autofocus>
+        {{- if .EmailModal}}
+        <label for="email" class="text-danger">{{.EmailModal}}</label>
+        {{- end -}}
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Create User</button>
+        <p class="mt-5 mb-3 text-muted">Best team &copy; 2018</p>
+    </div>
 </form>
+
 {{end}}
 {{define "foot"}}{{end}}
-

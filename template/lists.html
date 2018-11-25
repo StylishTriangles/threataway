@@ -45,8 +45,8 @@
 	<table class="table">
 		<tr class="thead-dark">
 			<th></th>
-			<th>Nazwa listy</th>
-			<th>Akcje</th>
+			<th>List name</th>
+			<th>Actions</th>
 		</tr>
 		{{range .Lists}}
 		<tr>
@@ -54,9 +54,9 @@
 				<input type="checkbox" name="{{.ID}}">
 			<td>{{.Name}}</td>
 			<td>
-				<button class="btn">Wyswietl</button>
-				<button class="btn">Edytuj</button>
-				<button class="btn">Usun</button>
+				<a href="/lists/{{.Name}}" class="btn btn-secondary">View</a>
+				<button class="btn">Edit</button>
+				<button class="btn">Delete</button>
 			</td>
 		</tr>
 		{{end}}

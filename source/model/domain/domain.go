@@ -43,7 +43,8 @@ func GetAll() ([]Domain, error) {
 	return ret, nil
 }
 
-func GetFromList(idList uint32) ([]Domain, error) {
+// GetFromList returns domains on list with given name
+func GetFromList(listname string) ([]Domain, error) {
 	var ret []Domain
 	tx, err := database.DB.Begin()
 	if err != nil {
@@ -52,12 +53,12 @@ func GetFromList(idList uint32) ([]Domain, error) {
 	defer tx.Rollback()
 
 	// Check if username already exists in db
-	stmt, err := tx.Prepare("SELECT urls.idUrl, urls.domain, urls.rating FROM urls INNER JOIN listlist ON urls.idUrl = listlists.idUrl WHERE idList = ?")
+	stmt, err := tx.Prepare("SELECT urls.idUrl, urls.domain, urls.rating FROM listlists LEFT JOIN lists ON listlists.idList = lists.idList LEFT JOIN urls ON urls.idUrl = listlists.idURL WHERE lists.name = ?")
 	if err != nil {
 		return nil, err
 	}
 	defer stmt.Close()
-	rows, err := stmt.Query()
+	rows, err := stmt.Query(listname)
 	if err != nil {
 		return nil, err
 	}
