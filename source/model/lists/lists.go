@@ -2,6 +2,7 @@ package lists
 
 import (
 	"gowebapp/source/shared/database"
+	"log"
 	"sort"
 )
 
@@ -69,6 +70,40 @@ func DeleteLists(listIDs []uint32, userID uint32) (int, error) {
 		stmt.Close()
 	}
 	return deleted, tx.Commit()
+}
+
+// DeleteAllDomainsFromList clears domains in list
+func DeleteAllDomainsFromList(listID uint32) {
+	stmt, err := database.DB.Prepare(`DELETE from listlists WHERE idList = ?`)
+	if err != nil {
+		log.Println("Cannot delete urls from list")
+
+		return
+	}
+	defer stmt.Close()
+
+	stmt.Query(listID)
+}
+
+// AddDomainsToList adds domains to existing list
+func AddDomainsToList(domainIDs []uint32, listID uint32) error {
+
+	for _, v := range domainIDs {
+		stmt, err := database.DB.Prepare("INSERT INTO listlists(idUrl, idList) VALUES(?, ?)")
+		if err != nil {
+			return err
+		}
+
+		_, err = stmt.Query(v, listID)
+		if err != nil {
+			log.Println("Cannot insert id to database")
+			stmt.Close()
+			return err
+		}
+		stmt.Close()
+	}
+
+	return nil
 }
 
 // CreateNewList creates new list in db with ids of given domains, specific name and ownerID also must be provided
