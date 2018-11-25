@@ -14,7 +14,7 @@ import (
 	"strings"
 )
 
-var urlRegex = regexp.MustCompile("^[a-zA-Z0-9_-+]+$")
+var urlRegex = regexp.MustCompile(`^[a-zA-Z0-9_\-+]+$`)
 
 func deploymentsHandler(w http.ResponseWriter, r *http.Request) {
 	v := view.New("deployments")
