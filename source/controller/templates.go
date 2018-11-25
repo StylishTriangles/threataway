@@ -1,13 +1,13 @@
 package controller
 
 import (
+	"encoding/json"
 	"fmt"
 	"gowebapp/source/model/templates"
 	"gowebapp/source/model/user"
 	"gowebapp/source/view"
 	"log"
 	"net/http"
-	"net/url"
 	"strconv"
 )
 
@@ -129,10 +129,11 @@ func templateLoad(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	vals := make(url.Values)
-	vals.Set("name", t.Name)
-	vals.Set("header", t.Header)
-	vals.Set("footer", t.Footer)
-	vals.Set("urlTemplate", t.UrlTemplate)
-	w.Write([]byte(vals.Encode()))
+	vals := make(map[string]string)
+	vals["name"] = t.Name
+	vals["header"] = t.Header
+	vals["footer"] = t.Footer
+	vals["urlTemplate"] = t.UrlTemplate
+	bytes, _ := json.Marshal(vals)
+	w.Write(bytes)
 }
