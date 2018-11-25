@@ -20,8 +20,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/lists">Lists</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/templates">Templates</a>
+                </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="/deployed_lists">Deployed lists</a>
+                    <a class="nav-link" href="/deployments">Deployments</a>
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
@@ -79,11 +82,11 @@
                     {{end}}
                 </select>
                 <select class="combobox" id="template_id">
-                        {{range .Templates}}
-                        <option value="{{.ID}}">{{.Name}}</option>
-                        {{end}}
+                    {{range .Templates}}
+                    <option value="{{.ID}}">{{.Name}}</option>
+                    {{end}}
                 </select>
-                
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
@@ -96,24 +99,24 @@
 {{define "foot"}}
 
 <script>
-$("#new_deployment").on("click", function() {
-    var list_id = $("#list_id").val();
-    var template_id = $("#template_id").val();
-    var url = $("#url").val()
+    $("#new_deployment").on("click", function () {
+        var list_id = $("#list_id").val();
+        var template_id = $("#template_id").val();
+        var url = $("#url").val()
 
-    var output = {
-        list_id: list_id,
-        template_id: template_id,
-        url: url
-    }
+        var output = {
+            list_id: list_id,
+            template_id: template_id,
+            url: url
+        }
 
-    $.post("/deployments/add", output, function (data) {
+        $.post("/deployments/add", output, function (data) {
             if (data != "")
                 alert(data);
             location.reload();
-    }).fail(function (response) {
-        alert('Error: ' + response.responseText);
-    });;
-})
+        }).fail(function (response) {
+            alert('Error: ' + response.responseText);
+        });;
+    })
 </script>
 {{end}}
