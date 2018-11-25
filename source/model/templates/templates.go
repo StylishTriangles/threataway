@@ -41,6 +41,23 @@ func GetAllTemplates() ([]Template, error) {
 
 }
 
+// GetTemplateByID returns template which has given ID
+func GetTemplateByID(ID uint32) (Template, error) {
+	ret := Template{}
+	stmt, err := database.DB.Prepare("SELECT templateID, name, header, footer, urlTemplate FROM templates WHERE templateID = ?")
+	if err != nil {
+		return ret, err
+	}
+	defer stmt.Close()
+
+	row := stmt.QueryRow(ID)
+	err = row.Scan(&ret.ID, &ret.Name, &ret.Header, &ret.Footer, &ret.UrlTemplate)
+	if err != nil {
+		return ret, err
+	}
+	return ret, nil
+}
+
 // DeleteTemplates deletes provided templateIDs from DB
 func DeleteTemplates(templateIDs []uint32) (int, error) {
 	deleted := 0

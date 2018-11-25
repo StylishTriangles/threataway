@@ -7,6 +7,7 @@ import (
 	"gowebapp/source/view"
 	"log"
 	"net/http"
+	"net/url"
 	"strconv"
 )
 
@@ -111,5 +112,27 @@ func templateCreate(w http.ResponseWriter, r *http.Request) {
 }
 
 func templateLoad(w http.ResponseWriter, r *http.Request) {
+	if !checkAuth(w, r) {
+		return
+	}
 
+	tID := r.FormValue("template_id")
+	tIDi, err := strconv.Atoi(tID)
+	if err != nil {
+		http.Error(w, "Could not resolve "+tID+" to integer value", http.StatusBadRequest)
+		return
+	}
+	t, err := templates.GetTemplateByID(uint32(tIDi))
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		log.Printf("templates.go@templateLoad: " + err.Error())
+		return
+	}
+
+	vals := make(url.Values)
+	vals.Set("name", t.Name)
+	vals.Set("header", t.Header)
+	vals.Set("footer", t.Footer)
+	vals.Set("urlTemplate", t.UrlTemplate)
+	w.Write([]byte(vals.Encode()))
 }
