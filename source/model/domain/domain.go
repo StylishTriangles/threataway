@@ -2,7 +2,6 @@ package domain
 
 import (
 	"gowebapp/source/shared/database"
-	"log"
 )
 
 // Domain represents a single domain in database
@@ -59,7 +58,7 @@ func GetFromList(listname string) ([]Domain, error) {
 	defer tx.Rollback()
 
 	// Check if username already exists in db
-	stmt, err := tx.Prepare("SELECT urls.idUrl, urls.domain, urls.rating, urls.shodan_malware, urls.malicious urls.honeypot_score, listlists.dirty FROM listlists LEFT JOIN lists ON listlists.idList = lists.idList LEFT JOIN urls ON urls.idUrl = listlists.idURL WHERE lists.name = ?")
+	stmt, err := tx.Prepare("SELECT urls.idUrl, urls.domain, urls.rating, urls.shodan_malware, urls.malicious, urls.honeypot_score, listlists.dirty FROM listlists LEFT JOIN lists ON listlists.idList = lists.idList LEFT JOIN urls ON urls.idUrl = listlists.idURL WHERE lists.name = ?")
 	if err != nil {
 		return nil, err
 	}
@@ -73,7 +72,6 @@ func GetFromList(listname string) ([]Domain, error) {
 		Mal1, Mal2 := true, true
 		err = rows.Scan(&d.ID, &d.URL, &d.Rating, &Mal1, &Mal2, &d.Honeypot, &d.Dirty)
 		d.Malicious = Mal1 || Mal2
-		log.Println(d)
 		if err != nil {
 			return nil, err
 		}
