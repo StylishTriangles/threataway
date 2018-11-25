@@ -26,7 +26,8 @@ def query_shodan(list_id_domain, con, lazy_rating=1):
         break
       except:
         time.sleep(1)
-    res["honeypot_score"] = honeypot_score
+    if str(honeypot_score)[0] != "{":
+      res["honeypot_score"] = honeypot_score
     
     query_base="https://www.shodan.io/search?query="
     query_malware='category:malware ip:' + ipaddr 
@@ -68,6 +69,9 @@ def query_shodan(list_id_domain, con, lazy_rating=1):
     update_query = 'UPDATE urls SET {} WHERE idUrl=%s'.format(', '.join('{}=%s'.format(k) for k in res))
     
     cur = con.cursor()
+    #print(update_query)
+    #print(res)
+    #print(domain_id)
     changed = cur.execute(update_query, tuple(list(res.values())) + (domain_id,))
     con.commit()
     if lazy_rating == 0 or changed != 0:
