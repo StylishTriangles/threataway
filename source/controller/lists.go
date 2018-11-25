@@ -11,6 +11,10 @@ import (
 )
 
 func listsHandler(w http.ResponseWriter, r *http.Request) {
+	if !checkAuth(w, r) {
+		return
+	}
+
 	v := view.New("lists")
 	lists, err := lists.GetAllLists()
 

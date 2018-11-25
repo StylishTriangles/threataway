@@ -10,6 +10,10 @@ import (
 )
 
 func deployedListHandler(w http.ResponseWriter, r *http.Request) {
+	if !checkAuth(w, r) {
+		return
+	}
+
 	m := mux.Vars(r)
 
 	stmt, err := database.DB.Prepare(`SELECT urls.domain FROM listlists LEFT JOIN deployments ON listlists.idList = deployments.listID LEFT JOIN urls ON listlists.idURL = urls.idUrl WHERE deployments.url = ?  `)
