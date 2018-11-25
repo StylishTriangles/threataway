@@ -27,6 +27,16 @@ def get_domains_from_db(con):
     rows = list(cur.fetchall())
     return rows
 
+def merge(list1, list2):
+  return list(set(list1+list2))
+
+def set_dirty(ids, con):
+  for id_ in ids:
+    update_query = 'UPDATE listlists SET dirty = 1 WHERE idURL = %s'
+    cur = con.cursor()
+    changed = cur.execute(update_query, (id_,))
+    con.commit()
+
 def main():
   if len(sys.argv) < 2 or len(sys.argv) > 3:
     print("main.py service")
@@ -38,23 +48,27 @@ def main():
     domains = get_domains_from_db(con)
   elif len(sys.argv) == 3:
     domains = [(int(sys.argv[1]), sys.argv[2])]
+  ids=[]
   if len(sys.argv) == 2:
     if service == "talos":
-      talos(domains, con)  
+      ids=merge(ids, talos(domains, con, 1))
     elif service == "shodan":
-      query_shodan(domains, con)
+      ids=merge(ids, query_shodan(domains, con, 1))
     elif service == "all":
-      query_shodan(domains, con, 1)
-      talos(domains, con, 1)
+      ids=merge(ids, query_shodan(domains, con, 1))
+      ids=merge(ids, talos(domains, con, 1))
     elif service == "recalc":
-      query_shodan(domains, con, 0)
-      talos(domains, con, 0)
+      ids=merge(ids, query_shodan(domains, con, 0))
+      ids=merge(ids, talos(domains, con, 0))
     else:
       print("unknown service")
       sys.exit(-2)
   else:
-    talos(domains, con)
-    query_shodan(domains, con)
+    ids=merge(ids,talos(domains, con, 1))
+    ids=merge(ids,query_shodan(domains, con, 1))
+  print("ids:")
+  print(ids)
+  set_dirty(ids, con)
   con.close()
      
 if __name__ == "__main__":
