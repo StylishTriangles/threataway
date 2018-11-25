@@ -60,6 +60,8 @@ func GetRouter() *mux.Router {
 	r.HandleFunc("/domains/add", domainsAdd).Methods("POST")
 	r.HandleFunc("/domains/delete", domainsDelete).Methods("POST")
 	r.HandleFunc("/domains/list", domainsCreateList).Methods("POST")
+	r.HandleFunc("/timer", timerGET).Methods("GET")
+	r.HandleFunc("/timer", timerPOST).Methods("POST")
 
 	// Deployment
 	r.HandleFunc("/d/{deploy_name}", deployedListHandler)

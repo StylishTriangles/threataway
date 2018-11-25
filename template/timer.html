@@ -1,0 +1,118 @@
+{{define "title"}}Login | GoYeah!{{end}}
+{{define "head"}}
+<link href="/static/css/login.css" rel="stylesheet">
+{{end}}
+{{define "content"}}
+<!--
+<div class="hero" id="signup">
+
+  <div id="header" class="landing-header">
+
+  </div>
+  <div id="login-modal" class="modal" style="z-index: 1003; display: block; opacity: 1; transform: scaleX(1); top: 10%;">
+    <h3>Log in</h3>
+    <div class="modal-content" style="padding-top:0;">
+      <form accept-charset="UTF-8" action="/login" method="post" data-remote="true" novalidate="novalidate">
+        <div style="display:none"><input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden"
+            value="/2Z+pSBIRadBTwILLydY0kHBQsZ7wqgCWjSqZmU9y/0="></div>
+        <input type="hidden" id="redirect-after-login" name="redirect">
+
+        <div class="url-warning">
+          <p><span style="font-weight: bold;">Important!</span>: Please check that you are visiting
+            https://legoracer.ddns.net<br>
+            <img alt="URL" src="/static/image/login/secure.png">
+          </p>
+        </div>
+
+        <div class="row" style="margin-bottom:15px;">
+
+          <div class="col s12 m6 l6 input-field">
+            <input id="login" name="login" autocomplete="off" type="text" value="{{if .Login}}{{.Login}}{{end}}">
+            <label for="login" class="active">Username or Email</label>
+          </div>
+
+          <div class="col s12 m6 l6 input-field">
+            <input id="auth-password" name="password" type="password">
+            <label for="auth-password" class="active">Password</label>
+          </div>
+
+
+        </div>
+
+        <div class="row">
+          <div class="col s12" style="text-align: right;">
+            {{if .LoginFailure}}<span style="line-height: 36px;padding-right: 60px;color:#e6492e">Incorrect login or
+              password</span>{{end}}
+
+            <span style="line-height: 36px;padding-right: 20px;color:#a4a9ac">
+              <a href="/password_resets/new">Forgot your password?</a>
+            </span>
+
+            <button class="btn btn-green" type="submit" style="float:none;" name="action" data-disable-with="<div class='hide-text'>Log in</div><i class='fa fa-circle-o-notch fa-spin'>">
+              Log in
+            </button>
+
+            <a href="javascript:void(0)" onclick="$('.modal').closeModal();" class="cancel-action">
+              Cancel
+            </a>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>-->
+<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      <img src="/static/image/orlen_logo.png" height="30" alt="">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/domains">Domains</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/lists">Lists</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/templates">Templates</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/deployments">Deployments</a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+      </form>
+    </div>
+  </div>
+</nav>
+
+
+<form class="form-signin" action="/timer" method="post" data-remote="true" novalidate="novalidate">
+
+  <div class="text-center">
+    <div style="display:none"><input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden"
+        value="/2Z+pSBIRadBTwILLydY0kHBQsZ7wqgCWjSqZmU9y/0="></div>
+    <input type="hidden" id="redirect-after-login" name="redirect">
+    <img class="mb-4" src="/static/image/orlen_logo.png" alt="" width="72" height="72">
+    <h1 class="h3 mb-3 font-weight-normal">Please provide new timer settings (in minutes)</h1>
+    <label for="timer" class="sr-only">Timer</label>
+    <input type="text" class="form-control" id="timer" name="timer" autocomplete="off" type="text" placeholder="Timer"
+      value="{{if .timer}}{{.timer}}{{end}}" required autofocus>
+
+    {{if .ok}}
+    <span class="text-success">Timer set</span>
+    {{end}}
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Set</button>
+    <p class="mt-5 mb-3 text-muted">Best team &copy; 2018</p>
+  </div>
+</form>
+
+{{end}}
+{{define "foot"}}{{end}}
