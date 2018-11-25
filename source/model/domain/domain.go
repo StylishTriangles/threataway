@@ -25,7 +25,7 @@ func GetAll() ([]Domain, error) {
 	defer tx.Rollback()
 
 	// Check if username already exists in db
-	stmt, err := tx.Prepare("SELECT idUrl, domain, rating, shodan_malware, honeypot_score FROM urls")
+	stmt, err := tx.Prepare("SELECT idUrl, domain, rating, shodan_malware, malicious, honeypot_score FROM urls")
 	if err != nil {
 		return nil, err
 	}
@@ -36,7 +36,9 @@ func GetAll() ([]Domain, error) {
 	}
 	for rows.Next() {
 		d := Domain{}
-		err = rows.Scan(&d.ID, &d.URL, &d.Rating, &d.Malicious, &d.Honeypot)
+		Mal1, Mal2 := true, true
+		err = rows.Scan(&d.ID, &d.URL, &d.Rating, &Mal1, &Mal2, &d.Honeypot)
+		d.Malicious = Mal1 || Mal2
 		if err != nil {
 			return nil, err
 		}
@@ -57,7 +59,7 @@ func GetFromList(listname string) ([]Domain, error) {
 	defer tx.Rollback()
 
 	// Check if username already exists in db
-	stmt, err := tx.Prepare("SELECT urls.idUrl, urls.domain, urls.rating, urls.shodan_malware, urls.honeypot_score, listlists.dirty FROM listlists LEFT JOIN lists ON listlists.idList = lists.idList LEFT JOIN urls ON urls.idUrl = listlists.idURL WHERE lists.name = ?")
+	stmt, err := tx.Prepare("SELECT urls.idUrl, urls.domain, urls.rating, urls.shodan_malware, urls.malicious urls.honeypot_score, listlists.dirty FROM listlists LEFT JOIN lists ON listlists.idList = lists.idList LEFT JOIN urls ON urls.idUrl = listlists.idURL WHERE lists.name = ?")
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +70,9 @@ func GetFromList(listname string) ([]Domain, error) {
 	}
 	for rows.Next() {
 		d := Domain{}
-		err = rows.Scan(&d.ID, &d.URL, &d.Rating, &d.Malicious, &d.Honeypot, &d.Dirty)
+		Mal1, Mal2 := true, true
+		err = rows.Scan(&d.ID, &d.URL, &d.Rating, &Mal1, &Mal2, &d.Honeypot, &d.Dirty)
+		d.Malicious = Mal1 || Mal2
 		log.Println(d)
 		if err != nil {
 			return nil, err
