@@ -54,9 +54,8 @@
 				<input type="checkbox" name="{{.ID}}">
 			<td>{{.Name}}</td>
 			<td>
-				<a href="/lists/{{.Name}}" class="btn btn-secondary">View</a>
+				<a href="/lists/{{.Name}}" class="btn btn-primary">View</a>
 				<button class="btn">Edit</button>
-				<button class="btn">Delete</button>
 			</td>
 		</tr>
 		{{end}}
@@ -82,7 +81,9 @@
 				alert(data);
 			location.reload();
 
-		});
+		}).fail(function (response) {
+            alert('Error: ' + response.responseText);
+        });;
 	});
 </script>
 {{end}}
