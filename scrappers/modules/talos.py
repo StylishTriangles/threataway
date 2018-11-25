@@ -3,6 +3,8 @@ from bs4 import BeautifulSoup
 import requests
 import socket
 
+from calc_score import update_score
+
 def talos_query(endpoint, domain, query_params):
   search_string = domain
   base_url = 'https://talosintelligence.com/'
@@ -40,6 +42,7 @@ def talos_query_wscore(query_string):
 
 def talos(list_id_domain, con):
   for domain_id,domain in list_id_domain:
+    print("domain: " + domain)
     ipaddr=socket.gethostbyname(domain)
     blacklist = talos_query_blacklist(ipaddr)
     details = talos_query_details(ipaddr)
@@ -64,5 +67,7 @@ def talos(list_id_domain, con):
     res = {k: v for k, v in res.items() if v is not None}
     update_query = 'UPDATE urls SET {} WHERE idUrl=%s'.format(', '.join('{}=%s'.format(k) for k in res))
     cur = con.cursor()
-    cur.execute(update_query, tuple(list(res.values())) + (domain_id,))
+    changed = cur.execute(update_query, tuple(list(res.values())) + (domain_id,))
     con.commit()
+    if changed != 0:
+      update_score(con, domain_id)
