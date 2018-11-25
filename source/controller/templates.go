@@ -137,3 +137,41 @@ func templateLoad(w http.ResponseWriter, r *http.Request) {
 	bytes, _ := json.Marshal(vals)
 	w.Write(bytes)
 }
+
+func templateModify(w http.ResponseWriter, r *http.Request) {
+	// Check if user has write permissions
+	session, err := store.Get(r, "session")
+	auth, ok := session.Values["authenticated"]
+	if err != nil || !ok || !auth.(bool) {
+		http.Error(w, "Please log in to view this page", 403)
+		log.Println("Please log in to view this page")
+		return
+	}
+	user, ok := session.Values["user"].(*user.User)
+	if !ok {
+		log.Println("Corrupt cookie data")
+		http.Error(w, "An error occoured: corrupt cookie data", 500)
+		return
+	}
+	if user.Role < 1 {
+		log.Println("Insufficient permisions (you need write access to perform this action")
+		http.Error(w, "Insufficient permisions (you need write access to perform this action", 403)
+		return
+	}
+
+	tID, _ := strconv.Atoi(r.FormValue("template_id"))
+	t := templates.Template{
+		ID:          uint32(tID),
+		Name:        r.FormValue("name"),
+		Header:      r.FormValue("header"),
+		Footer:      r.FormValue("footer"),
+		UrlTemplate: r.FormValue("urlTemplate"),
+	}
+	err = templates.UpdateTemplate(t)
+	if err != nil {
+		log.Println(err)
+		http.Error(w, err.Error(), 500)
+		return
+	}
+	w.Write([]byte("Template updated successfully"))
+}
