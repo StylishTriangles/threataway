@@ -38,15 +38,33 @@ def talos_query_wscore(query_string):
     {'hostname':'SDS', 'query_string':'/score/wbrs/json?url=%s' % query_string} 
   )
 
-def talos(domain):
-  ipaddr=socket.gethostbyname(domain)
-  #ipaddr='31.185.104.19'           malware
-  blacklist = talos_query_blacklist(ipaddr)
-  print(blacklist)
-  print("********")
-  details = talos_query_details(ipaddr)
-  print(details)
-  print("********")
-  wscore = talos_query_wscore(ipaddr)
-  print(wscore)
-  
+def talos(list_id_domain, con):
+  for domain_id,domain in list_id_domain:
+    ipaddr=socket.gethostbyname(domain)
+    blacklist = talos_query_blacklist(ipaddr)
+    details = talos_query_details(ipaddr)
+    wscore = talos_query_wscore(ipaddr)
+    res={}
+    try:
+      if blacklist['entry']['expiration'] == 'NEVER':
+        res["malicious"]=0
+        res["malicious_type"]=""
+      else:
+        res["malicious"]=1
+        res["malicious_type"] = '|'.join(blacklist['entry']['classifications'])
+    except:
+      pass
+    
+    details_list=['hostname', 'monthly_spam_level', 'organization', 'web_score_name', 'email_score_name']
+    for key in details_list:
+      try:
+        res[key] = details[key] 
+      except:
+        pass
+    res = {k: v for k, v in res.items() if v is not None}
+    update_query = 'UPDATE urls SET {} WHERE idUrl=%s'.format(', '.join('{}=%s'.format(k) for k in res))
+    cur = con.cursor()
+    cur.execute(update_query, tuple(list(res.values())) + (domain_id,))
+    con.commit()
+    row = cur.fetchone()
+    #print(update_query)

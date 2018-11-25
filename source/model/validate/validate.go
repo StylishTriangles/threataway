@@ -155,13 +155,13 @@ func Templatename(configname string) (bool, error) {
 	return true, nil
 }
 
-func Urlformat(urlformat string) (bool, error) {
+func UrlTemplate(urlTemplate string) (bool, error) {
 	// TODO: and there
-	l := len(urlformat)
+	l := len(urlTemplate)
 	if l == 0 {
 		return false, ErrEmpty
 	}
-	if !strings.Contains(urlformat, "{URL}") {
+	if !strings.Contains(urlTemplate, "{URL}") {
 		return false, ErrInvalidFormat
 	}
 

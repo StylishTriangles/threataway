@@ -42,6 +42,8 @@ func GetRouter() *mux.Router {
 	r.HandleFunc("/logout", logoutHandler)
 	r.HandleFunc("/template", templateGET).Methods("GET")
 	r.HandleFunc("/template", templatePOST).Methods("POST")
+	r.HandleFunc("/templates", templatesHandler).Methods("GET")
+	r.HandleFunc("/templates", templatesDeleteHandler).Methods("POST")
 	r.HandleFunc("/register", registerGET).Methods("GET")
 	r.HandleFunc("/register", registerPOST).Methods("POST")
 	r.HandleFunc("/registered", registeredHandler)
