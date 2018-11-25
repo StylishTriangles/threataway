@@ -40,7 +40,7 @@ def talos_query_wscore(query_string):
     {'hostname':'SDS', 'query_string':'/score/wbrs/json?url=%s' % query_string} 
   )
 
-def talos(list_id_domain, con):
+def talos(list_id_domain, con, lazy_rating=1):
   for domain_id,domain in list_id_domain:
     print("domain: " + domain)
     ipaddr=socket.gethostbyname(domain)
@@ -69,5 +69,5 @@ def talos(list_id_domain, con):
     cur = con.cursor()
     changed = cur.execute(update_query, tuple(list(res.values())) + (domain_id,))
     con.commit()
-    if changed != 0:
+    if lazy_rating == 0 or changed != 0:
       update_score(con, domain_id)
