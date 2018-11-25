@@ -66,5 +66,3 @@ def talos(list_id_domain, con):
     cur = con.cursor()
     cur.execute(update_query, tuple(list(res.values())) + (domain_id,))
     con.commit()
-    row = cur.fetchone()
-    #print(update_query)

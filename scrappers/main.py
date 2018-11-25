@@ -37,9 +37,7 @@ def main():
   if len(sys.argv) == 2:
     domains = get_domains_from_db(con)
   elif len(sys.argv) == 3:
-    domains = sys.argv[2]
-    _id = int(sys.argv[1])
-  print(domains)
+    domains = [(int(sys.argv[1]), sys.argv[2])]
   if len(sys.argv) == 2:
     if service == "talos":
       talos(domains, con)  
@@ -49,8 +47,8 @@ def main():
       print("unknown service")
       sys.exit(-2)
   else:
-    talos([(_id, domains)], con)
-    #query_shodan(domains, con)
+    #talos(domains, con)
+    query_shodan(domains, con)
   con.close()
      
 if __name__ == "__main__":
