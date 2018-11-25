@@ -28,6 +28,14 @@ func editListGET(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	for i := 0; i < len(domainsChecked); i++ {
+		for j := 0; j < len(domains); j++ {
+			if domains[j].ID == domainsChecked[i].ID {
+				domains[j].Dirty = domainsChecked[i].Dirty
+			}
+		}
+	}
+
 	v.Vars["Domains"] = domains
 	v.Vars["DomainsChecked"] = domainsChecked
 	v.Vars["ListName"] = mp["list_name"]
