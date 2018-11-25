@@ -2,7 +2,7 @@ import pymysql
 import math
 
 def calc_score(rows):
-  print(rows)
+  #print(rows)
   malicious = int(rows[1])
   web_score_name = rows[3].lower()
   email_score_name = rows[4].lower()
@@ -41,7 +41,6 @@ def calc_score(rows):
   
 
 def update_score(con, _id):
-  print("score_calc")
   print(_id)
   cur = con.cursor()
   query = "SELECT rating, malicious, malicious_type, web_score_name, email_score_name, monthly_spam_level, honeypot_score, shodan_malware, shodan_creds  FROM urls WHERE idUrl=%s"
