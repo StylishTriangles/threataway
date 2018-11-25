@@ -13,7 +13,7 @@ def query_honeypot_score(ipaddr, key):
 
 def query_shodan(list_id_domain, con, lazy_rating=1):
   ret_list=[]
-  with open('../secret-dir/shodan.key', 'r') as f:
+  with open('../config/shodan.key', 'r') as f:
     key=f.read().replace('\n', '')
   api = Shodan(key)
 
