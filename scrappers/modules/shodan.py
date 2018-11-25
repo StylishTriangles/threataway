@@ -12,6 +12,7 @@ def query_honeypot_score(ipaddr, key):
   return requests.get(url).text
 
 def query_shodan(list_id_domain, con, lazy_rating=1):
+  ret_list=[]
   with open('../secret-dir/shodan.key', 'r') as f:
     key=f.read().replace('\n', '')
   api = Shodan(key)
@@ -69,10 +70,12 @@ def query_shodan(list_id_domain, con, lazy_rating=1):
     update_query = 'UPDATE urls SET {} WHERE idUrl=%s'.format(', '.join('{}=%s'.format(k) for k in res))
     
     cur = con.cursor()
-    #print(update_query)
-    #print(res)
-    #print(domain_id)
     changed = cur.execute(update_query, tuple(list(res.values())) + (domain_id,))
     con.commit()
     if lazy_rating == 0 or changed != 0:
-      update_score(con, domain_id)
+      if update_score(con, domain_id) != 0:
+        ret_list.append(domain_id)
+  print("ret_shodan")
+  print(ret_list)
+  return ret_list
+      
