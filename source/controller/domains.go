@@ -8,6 +8,7 @@ import (
 	"gowebapp/source/view"
 	"log"
 	"net/http"
+	"os/exec"
 	"regexp"
 	"strconv"
 	"strings"
@@ -39,8 +40,9 @@ func domainsAdd(w http.ResponseWriter, r *http.Request) {
 	session, err := store.Get(r, "session")
 	auth, ok := session.Values["authenticated"]
 	if err != nil || !ok || !auth.(bool) {
-		http.Error(w, "Please log in to view this page", 403)
-		log.Println("Please log in to view this page")
+		http.Redirect(w, r, "/login", 303)
+		//http.Error(w, "Please log in to view this page", 403)
+		//log.Println("Please log in to view this page")
 		return
 	}
 	user, ok := session.Values["user"].(*user.User)
@@ -85,6 +87,15 @@ func domainsAdd(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Write([]byte(fmt.Sprintf("Successfully added %s, assessment will be available shortly.", domainName)))
+
+	cmd := exec.Command("python", "main.py "+""+domainName)
+	cmd.Dir = "./scrappers"
+	log.Println("Updating " + domainName)
+	_, err = cmd.CombinedOutput()
+	if err != nil {
+		log.Fatalf("cmd.Run() failed with %s\n", err)
+	}
+
 }
 
 func domainsCreateList(w http.ResponseWriter, r *http.Request) {
@@ -92,7 +103,7 @@ func domainsCreateList(w http.ResponseWriter, r *http.Request) {
 	session, err := store.Get(r, "session")
 	auth, ok := session.Values["authenticated"]
 	if err != nil || !ok || !auth.(bool) {
-		http.Error(w, "Please log in to view this page", 403)
+		http.Error(w, "ePlease log in to view this page", 403)
 		log.Println("Please log in to view this page")
 		return
 	}
@@ -137,7 +148,7 @@ func domainsDelete(w http.ResponseWriter, r *http.Request) {
 	session, err := store.Get(r, "session")
 	auth, ok := session.Values["authenticated"]
 	if err != nil || !ok || !auth.(bool) {
-		http.Error(w, "Please log in to view this page", 403)
+		http.Error(w, "aPlease log in to view this page", 403)
 		log.Println("Please log in to view this page")
 		return
 	}
