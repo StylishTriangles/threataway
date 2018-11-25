@@ -51,14 +51,17 @@
             <td>{{.URL}}</td>
             <td>{{.Rating}}</td>
             <!-- Icon made by https://www.flaticon.com/authors/srip licensed by CC 3.0 BY -->
-            <td>
-                {{if (ge .Rating 7.0)}}<img src="/static/image/protection.png" height="30" alt="">
-                <!-- Icon made by https://www.flaticon.com/authors/twitter licensed by CC 3.0 BY -->
-                {{else}}{{if (ge .Rating 4.0)}}<img src="/static/image/warning.png" height="30" alt="">
+            <td>{{.Rating}}</td>
+            <!-- Icon made by https://www.flaticon.com/authors/srip licensed by CC 3.0 BY -->
+            <td>{{if (ge .Rating  7.0)}}<img src="/static/image/safe.png" height="30" title="Secure">
+            <!-- Icon made by https://www.flaticon.com/authors/twitter licensed by CC 3.0 BY -->
+                {{else}}{{if (ge .Rating  4.0)}}<img src="/static/image/warning.png" height="30" title="Untrusted">
                 <!-- Icon made by https://www.flaticon.com/authors/maxim-basinski licensed by CC 3.0 BY -->
-                {{else}}<img src="/static/image/cancel.png" height="30" alt="">{{end}}{{end}}
+                {{else}}<img src="/static/image/malicious.png" height="30" title="Malicious">{{end}}{{end}}
                 <!-- Icon made by https://www.freepik.com/ licensed by CC 3.0 BY -->
-                {{if .Malicious}}&nbsp&nbsp<img src="/static/image/malware.png" height="30" alt="">{{end}}
+                {{if .Malicious}}&nbsp&nbsp<img src="/static/image/malware.png" height="30" title="Malware found">{{end}}
+                <!-- Icon made by https://www.freepik.com/ licensed by CC 3.0 BY -->
+                {{if (ge .Honeypot 0.5)}}&nbsp&nbsp<img src="/static/image/honeypot.png" height="30" title="Probable honeypot">{{end}}
             </td>
         </tr>
         {{end}}
