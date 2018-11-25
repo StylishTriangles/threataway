@@ -117,6 +117,28 @@
         }).fail(function (response) {
             alert('Error: ' + response.responseText);
         });;
-    })
+    });
+
+    $("#delete").on("click", function () {
+        var checked_checkboxes = $("input:checked");
+        var ids = []
+
+        for (var i = 0; i < checked_checkboxes.length; i++) {
+            ids.push(checked_checkboxes[i].getAttribute("name"))
+        }
+
+        var output = {
+            ids: ids
+        };
+
+        $.post("/deployments/delete", output, function (data) {
+            if (data != "")
+                alert(data);
+            location.reload();
+
+        }).fail(function (response) {
+            alert('Error: ' + response.responseText);
+        });;
+    });
 </script>
 {{end}}
