@@ -6,9 +6,10 @@ import (
 
 // Domain represents a single domain in database
 type Domain struct {
-	ID     uint32
-	URL    string
-	Rating float32
+	ID        uint32
+	URL       string
+	Rating    float32
+	Malicious bool
 }
 
 // GetAll returns list of all tracked domains
@@ -21,7 +22,7 @@ func GetAll() ([]Domain, error) {
 	defer tx.Rollback()
 
 	// Check if username already exists in db
-	stmt, err := tx.Prepare("SELECT idUrl, domain, rating FROM urls")
+	stmt, err := tx.Prepare("SELECT idUrl, domain, rating, shodan_malware FROM urls")
 	if err != nil {
 		return nil, err
 	}
@@ -32,7 +33,7 @@ func GetAll() ([]Domain, error) {
 	}
 	for rows.Next() {
 		d := Domain{}
-		err = rows.Scan(&d.ID, &d.URL, &d.Rating)
+		err = rows.Scan(&d.ID, &d.URL, &d.Rating, &d.Malicious)
 		if err != nil {
 			return nil, err
 		}
@@ -53,7 +54,7 @@ func GetFromList(listname string) ([]Domain, error) {
 	defer tx.Rollback()
 
 	// Check if username already exists in db
-	stmt, err := tx.Prepare("SELECT urls.idUrl, urls.domain, urls.rating FROM listlists LEFT JOIN lists ON listlists.idList = lists.idList LEFT JOIN urls ON urls.idUrl = listlists.idURL WHERE lists.name = ?")
+	stmt, err := tx.Prepare("SELECT urls.idUrl, urls.domain, urls.rating, urls.shodan_malware FROM listlists LEFT JOIN lists ON listlists.idList = lists.idList LEFT JOIN urls ON urls.idUrl = listlists.idURL WHERE lists.name = ?")
 	if err != nil {
 		return nil, err
 	}
@@ -64,7 +65,7 @@ func GetFromList(listname string) ([]Domain, error) {
 	}
 	for rows.Next() {
 		d := Domain{}
-		err = rows.Scan(&d.ID, &d.URL, &d.Rating)
+		err = rows.Scan(&d.ID, &d.URL, &d.Rating, &d.Malicious)
 		if err != nil {
 			return nil, err
 		}

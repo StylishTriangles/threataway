@@ -47,7 +47,7 @@
         </div>
     </div>
 </nav>
-
+    
 <div class="container">
     <table class="table">
         <tr class="thead-dark">
@@ -60,6 +60,14 @@
             <td><input type="checkbox" name="{{.ID}}"></td>
             <td>{{.URL}}</td>
             <td>{{.Rating}}</td>
+            <!-- Icon made by https://www.flaticon.com/authors/srip licensed by CC 3.0 BY -->
+            <td>{{if (ge .Rating  7.0)}}<img src="/static/image/protection.png" height="30" alt="">
+            <!-- Icon made by https://www.flaticon.com/authors/twitter licensed by CC 3.0 BY -->
+                {{else}}{{if (ge .Rating  4.0)}}<img src="/static/image/warning.png" height="30" alt="">
+                <!-- Icon made by https://www.flaticon.com/authors/maxim-basinski licensed by CC 3.0 BY -->
+                {{else}}<img src="/static/image/cancel.png" height="30" alt="">{{end}}{{end}}
+                <!-- Icon made by https://www.freepik.com/ licensed by CC 3.0 BY -->
+                {{if .Malicious}}&nbsp&nbsp<img src="/static/image/malware.png" height="30" alt="">{{end}}</td>
         </tr>
         {{end}}
     </table>
