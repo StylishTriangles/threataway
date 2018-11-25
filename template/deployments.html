@@ -96,12 +96,24 @@
 {{define "foot"}}
 
 <script>
-$("#create_new_deployment").on("click", function() {
+$("#new_deployment").on("click", function() {
     var list_id = $("#list_id").val();
     var template_id = $("#template_id").val();
+    var url = $("#url").val()
 
-    alert(list_id);
-    alert(template_id);
+    var output = {
+        list_id: list_id,
+        template_id: template_id,
+        url: url
+    }
+
+    $.post("/deployments/add", output, function (data) {
+            if (data != "")
+                alert(data);
+            location.reload();
+    }).fail(function (response) {
+        alert('Error: ' + response.responseText);
+    });;
 })
 </script>
 {{end}}

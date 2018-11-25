@@ -53,9 +53,11 @@ func GetRouter() *mux.Router {
 	r.HandleFunc("/account/password", accountPasswordGET).Methods("GET")
 	r.HandleFunc("/account/password", accountPasswordPOST).Methods("POST")
 	r.HandleFunc("/account/activate", accountActivate).Queries("key", "{key}")
-
 	r.HandleFunc("/domains", domainsGET).Methods("GET")
 	r.HandleFunc("/domains/list", domainsCreateList).Methods("POST")
+
+	// Deployment
+	r.HandleFunc("/l/{deploy_name}", deployedListHandler)
 
 	r.PathPrefix("/static/").Handler(
 		http.StripPrefix("/static/", http.FileServer(http.Dir("static/"))))
