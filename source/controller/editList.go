@@ -18,7 +18,6 @@ func editListGET(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// TODO: SECURITY!!!!
 	mp := mux.Vars(r)
 	v := view.New("editList")
 	domains, err := domain.GetAll()
