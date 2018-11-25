@@ -22,6 +22,9 @@
 				<li class="nav-item active">
 					<a class="nav-link" href="/templates">Templates</a>
 				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/deployments">Deployments</a>
+				</li>
 			</ul>
 			<form class="form-inline my-2 my-lg-0">
 				<!-- Button trigger modal -->
@@ -98,7 +101,7 @@
 		} else {
 			$("#name").removeClass("is-invalid");
 		}
-		
+
 		if (!urlTemplate.includes("{URL}")) {
 			$("#urlTemplate").addClass("is-invalid");
 		} else {
