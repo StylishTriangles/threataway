@@ -107,5 +107,4 @@ func templateCreate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Write([]byte("Successfully created new template!"))
-
 }
