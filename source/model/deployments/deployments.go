@@ -56,12 +56,12 @@ func CreateNewDeployment(deployURL string, listID, tmplID uint32) error {
 	}
 	defer tx.Rollback()
 
-	stmti, err := tx.Prepare("INSERT INTO deployments(listID, templateID) VALUES(?, ?)")
+	stmti, err := tx.Prepare("INSERT INTO deployments(url, listID, templateID) VALUES(?, ?, ?)")
 	if err != nil {
 		return err
 	}
 	defer stmti.Close()
-	_, err = stmti.Exec(listID, tmplID)
+	_, err = stmti.Exec(deployURL, listID, tmplID)
 	if err != nil {
 		return err
 	}

@@ -77,5 +77,9 @@ func deploymentsAdd(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	err = deployments.CreateNewDeployment(url, uint32(lIDi), uint32(tIDi))
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
 	w.Write([]byte(fmt.Sprintf("Success publishing new list, it will be available at /l/%s", url)))
 }
