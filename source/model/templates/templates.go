@@ -4,7 +4,7 @@ import "gowebapp/source/shared/database"
 
 // Template may contain one row from templates table
 type Template struct {
-	ID          uint32 `db:"idList"`
+	ID          uint32 `db:"templateID"`
 	Name        string `db:"name"`
 	Header      string `db:"header"`
 	Footer      string `db:"footer"`
@@ -15,10 +15,8 @@ func New() *Template {
 	return &Template{}
 }
 
-// GetAllTemplates does smth
 func GetAllTemplates() ([]Template, error) {
-
-	stmt, err := database.DB.Prepare(`SELECT idList, name, header, footer, urlTemplate FROM templates`)
+	stmt, err := database.DB.Prepare(`SELECT templateID, name, header, footer, urlTemplate FROM templates`)
 	if err != nil {
 		return nil, err
 	}
@@ -44,10 +42,10 @@ func GetAllTemplates() ([]Template, error) {
 }
 
 // DeleteTemplates deletes provided templateIDs from DB
-func DeleTetemplates(templateIDs []uint32) (int, error) {
+func DeleteTemplates(templateIDs []uint32) (int, error) {
 	deleted := 0
 	for _, v := range templateIDs {
-		stmt, err := database.DB.Prepare(`DELETE FROM templates WHERE idList = ?`)
+		stmt, err := database.DB.Prepare(`DELETE FROM templates WHERE templateID = ?`)
 		if err != nil {
 			return deleted, err
 		}
