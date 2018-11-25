@@ -190,10 +190,9 @@
 
 		$.post("/templates/edit_load", output, function (data, status) {
 			data = JSON.parse(data)
-			$("#name-edit").val(data["name"]);
-			$("#header-edit").val(data["header"]);
-			$("#footer-edit").val(data["footer"]);
-			$("#urlTemplate-edit").val(data["urlTemplate"]);
+			$("#edit-header").val(data["header"]);
+			$("#edit-footer").val(data["footer"]);
+			$("#edit-urlTemplate").val(data["urlTemplate"]);
 
 			actual_editing = template_id;
 
