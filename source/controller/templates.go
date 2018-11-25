@@ -88,7 +88,6 @@ func templateCreate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Delete lists with specified IDs provided via json from frontend
 	r.ParseForm()
 	name, ok_n := r.Form["name"]
 	header, ok_h := r.Form["header"]

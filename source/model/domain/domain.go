@@ -43,7 +43,7 @@ func GetAll() ([]Domain, error) {
 	return ret, nil
 }
 
-func GetFromList(listName string) ([]Domain, error) {
+func GetFromList(idList uint32) ([]Domain, error) {
 	var ret []Domain
 	tx, err := database.DB.Begin()
 	if err != nil {
@@ -52,7 +52,7 @@ func GetFromList(listName string) ([]Domain, error) {
 	defer tx.Rollback()
 
 	// Check if username already exists in db
-	stmt, err := tx.Prepare("SELECT idUrl, domain, rating FROM urls")
+	stmt, err := tx.Prepare("SELECT urls.idUrl, urls.domain, urls.rating FROM urls INNER JOIN listlist ON urls.idUrl = listlists.idUrl WHERE idList = ?")
 	if err != nil {
 		return nil, err
 	}
@@ -70,8 +70,7 @@ func GetFromList(listName string) ([]Domain, error) {
 		ret = append(ret, d)
 	}
 
-	tx.Commit()
-	return ret, nil
+	return ret, tx.Commit()
 }
 
 // RegisterNew creates a new database record for given domain
