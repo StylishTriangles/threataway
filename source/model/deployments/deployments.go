@@ -67,3 +67,25 @@ func CreateNewDeployment(deployURL string, listID, tmplID uint32) error {
 	}
 	return tx.Commit()
 }
+
+// DeleteDeployments does exactly what it says
+func DeleteDeployments(deploymentIDs []uint32) error {
+	tx, err := database.DB.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+	for _, v := range deploymentIDs {
+		stmt, err := tx.Prepare(`DELETE FROM deployments WHERE deploymentID = ?`)
+		if err != nil {
+			return err
+		}
+		_, err = stmt.Exec(v)
+		if err != nil {
+			stmt.Close()
+			return err
+		}
+		stmt.Close()
+	}
+	return tx.Commit()
+}
