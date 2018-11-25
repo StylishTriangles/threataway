@@ -30,7 +30,7 @@ func GetRouter() *mux.Router {
 
 	r.NotFoundHandler = http.HandlerFunc(notFoundHandler)
 
-	r.HandleFunc("/", homeHandler)
+	r.HandleFunc("/", domainsGET)
 	r.HandleFunc("/forbidden", forbiddenHandler)
 	r.HandleFunc("/lists", listsHandler).Methods("GET")
 	r.HandleFunc("/lists", listsDeleteHandler).Methods("POST")

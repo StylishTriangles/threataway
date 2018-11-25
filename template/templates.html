@@ -50,19 +50,22 @@
 			<th>Header</th>
 			<th>Footer</th>
 			<th>URL template</th>
+			<th>Actions</th>
 		</tr>
 		{{range .Templates}}
 		<tr>
 			<td>
-				<input type="checkbox" name="{{.ID}}">
-			<td>{{.Name}}</td>
-			<td>{{.Header}}</td>
-			<td>{{.Footer}}</td>
-			<td>{{.UrlTemplate}}</td>
+			<input type="checkbox" name="{{.ID}}">
+			<td>{{html .Name}}</td>
+			<td>{{html .Header}}</td>
+			<td>{{html .Footer}}</td>
+			<td>{{html .UrlTemplate}}</td>
+			<td><button class="btn btn-primary button-edit" data-toggle="modal" data-target="#exampleModalCenter2" data-id="{{.ID}}">Edit</button></td>
 		</tr>
 		{{end}}
 	</table>
 </div>
+
 <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
  aria-hidden="true">
@@ -87,6 +90,32 @@
 		</div>
 	</div>
 </div>
+
+<!-- Modal 2 -->
+<div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+ aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Edit template</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<textarea class="form-control mb-3" id="edit-header" rows="5" placeholder="Enter header"></textarea>
+				<textarea class="form-control mb-3" id="edit-footer" rows="5" placeholder="Enter footer"></textarea>
+				<textarea class="form-control" id="edit-urlTemplate" rows="5" placeholder="Enter prefix{URL}suffix"></textarea>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+				<button type="button" id="edit-template-save" class="btn btn-primary">Save</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
 {{end}}
 {{define "foot"}}
 <script>
@@ -141,6 +170,31 @@
 			if (data != "")
 				alert(data);
 			location.reload();
+
+		}).fail(function (response) {
+			alert('Error: ' + response.responseText);
+		});;
+	});
+
+	var actual_editing = -1;
+
+	$(".button-edit").on("click", function (btn) {
+		var template_id = btn.getAttribute("data-id");
+		
+		alert("aa");
+		return;
+
+		var output = {
+			template_id: template_id
+		};
+
+		$.post("/templates/edit_load", output, function (data) {
+			$("#name-edit").val(data["name"]);
+			$("#header-edit").val(data["header"]);
+			$("#footer-edit").val(data["footer"]);
+			$("#urlTemplate-edit").val(["urlTemplate"]);
+
+			actual_editing = template_id;
 
 		}).fail(function (response) {
 			alert('Error: ' + response.responseText);
