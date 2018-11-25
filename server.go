@@ -5,6 +5,7 @@ import (
 	"crypto/tls"
 	"encoding/json"
 	"gowebapp/source/controller"
+	"gowebapp/source/model/env"
 	"gowebapp/source/shared/database"
 	"gowebapp/source/shared/email"
 	"gowebapp/source/view"
@@ -12,7 +13,9 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"os/exec"
 	"os/signal"
+	"path/filepath"
 	"syscall"
 	"time"
 
@@ -168,6 +171,17 @@ func main() {
 	}()
 
 	log.Println("Server started")
+	t := env.GetEnv("timer")
+	if t == "" {
+		t = "10"
+	}
+	env.ChangeTimeout(t, func() {
+		path, _ := filepath.Abs("./scrappers")
+
+		cmd := exec.Command("python", "main.py", "all")
+		cmd.Dir = path
+		go cmd.Run()
+	})
 
 	// capture process termination signalls
 	csig := make(chan os.Signal, 2)

@@ -6,6 +6,8 @@ import (
 	"gowebapp/source/view"
 	"log"
 	"net/http"
+	"os/exec"
+	"path/filepath"
 )
 
 func timerGET(w http.ResponseWriter, r *http.Request) {
@@ -65,4 +67,15 @@ func timerPOST(w http.ResponseWriter, r *http.Request) {
 	v.Vars["timer"] = envtmr
 	v.Vars["ok"] = (tmr == envtmr)
 	v.Render(w)
+	t := env.GetEnv("timer")
+	if t == "" {
+		t = "10"
+	}
+	env.ChangeTimeout(t, func() {
+		path, _ := filepath.Abs("./scrappers")
+
+		cmd := exec.Command("python", "main.py", "all")
+		cmd.Dir = path
+		go cmd.Run()
+	})
 }
