@@ -35,6 +35,7 @@ func GetRouter() *mux.Router {
 	r.HandleFunc("/lists", listsHandler).Methods("GET")
 	r.HandleFunc("/lists", listsDeleteHandler).Methods("POST")
 	r.HandleFunc("/deployments", deploymentsHandler).Methods("GET")
+	r.HandleFunc("/deployments/add", deploymentsAdd).Methods("POST")
 	r.HandleFunc("/loggedin", loggedInHandler)
 	r.HandleFunc("/loggedout", loggedOutHandler)
 	r.HandleFunc("/login", loginGET).Methods("GET")

@@ -47,3 +47,23 @@ func GetAllDeployments() ([]Deployment, error) {
 	return returnList, nil
 
 }
+
+// CreateNewDeployment creates new deployment in the database
+func CreateNewDeployment(deployURL string, listID, tmplID uint32) error {
+	tx, err := database.DB.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	stmti, err := tx.Prepare("INSERT INTO deployments(listID, templateID) VALUES(?, ?)")
+	if err != nil {
+		return err
+	}
+	defer stmti.Close()
+	_, err = stmti.Exec(listID, tmplID)
+	if err != nil {
+		return err
+	}
+	return tx.Commit()
+}

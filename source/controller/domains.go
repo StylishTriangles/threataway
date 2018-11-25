@@ -100,8 +100,8 @@ func domainsCreateList(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if user.Role < 1 {
-		log.Println("Insufficient permisions (you need write access to perform this action")
-		http.Error(w, "Insufficient permisions (you need write access to perform this action", 403)
+		log.Println("Insufficient permisions (you need write access to perform this action)")
+		http.Error(w, "Insufficient permisions (you need write access to perform this action)", 403)
 		return
 	}
 
