@@ -1,14 +1,23 @@
 package controller
 
 import (
+	"fmt"
 	"gowebapp/source/model/domain"
 	"gowebapp/source/model/lists"
 	"gowebapp/source/model/user"
 	"gowebapp/source/view"
 	"log"
 	"net/http"
+	"regexp"
 	"strconv"
+	"strings"
+
+	"github.com/weppos/publicsuffix-go/publicsuffix"
 )
+
+var ipRegex = regexp.MustCompile(`^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4[0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$`)
+var ipShort = regexp.MustCompile(`^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$`)
+var illegalDomainChars = regexp.MustCompile("[;/?:@=&]")
 
 func domainsGET(w http.ResponseWriter, r *http.Request) {
 	// TODO: SECURITY!!!!
@@ -43,6 +52,36 @@ func domainsAdd(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	domainName := r.FormValue("name")
+	domainName = strings.TrimSpace(domainName)
+	if illegalDomainChars.FindString(domainName) != "" {
+		http.Error(w, "Please provide domain name in the simplest form (ex. \"onet.pl\" instead of \"http://poczta.onet.pl/\"", http.StatusBadRequest)
+		return
+	}
+	if ipRegex.FindString(domainName) != "" {
+		if ipShort.FindString(domainName) == "" {
+			http.Error(w, "Please remove all leading zeros from IP address (ex. Change 10.01.01.0 to 10.1.1.0)", http.StatusBadRequest)
+			return
+		}
+	} else {
+		domainClean, err := publicsuffix.Domain(domainName)
+		if err != nil {
+			log.Println(err)
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		if domainClean != domainName {
+			http.Error(w, fmt.Sprintf("Wrong domain name, did you mean \"%s\"?", domainClean), http.StatusBadRequest)
+			return
+		}
+	}
+
+	err = domain.RegisterNew(domainName)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.Write([]byte(fmt.Sprintf("Successfully added %s, assessment will be available shortly.", domainName)))
 }
 
 func domainsCreateList(w http.ResponseWriter, r *http.Request) {
