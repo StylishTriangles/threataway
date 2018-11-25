@@ -66,8 +66,6 @@ def main():
   else:
     ids=merge(ids,talos(domains, con, 1))
     ids=merge(ids,query_shodan(domains, con, 1))
-  print("ids:")
-  print(ids)
   set_dirty(ids, con)
   con.close()
      

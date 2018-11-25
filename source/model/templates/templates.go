@@ -11,10 +11,12 @@ type Template struct {
 	UrlTemplate string `db:"urlTemplate"`
 }
 
+// New returns newly created template pointer
 func New() *Template {
 	return &Template{}
 }
 
+// GetAllTemplates fetches all templates from DB
 func GetAllTemplates() ([]Template, error) {
 	stmt, err := database.DB.Prepare(`SELECT templateID, name, header, footer, urlTemplate FROM templates`)
 	if err != nil {
@@ -39,6 +41,23 @@ func GetAllTemplates() ([]Template, error) {
 
 	return returnList, nil
 
+}
+
+// GetTemplateByID returns template which has given ID
+func GetTemplateByID(ID uint32) (Template, error) {
+	ret := Template{}
+	stmt, err := database.DB.Prepare("SELECT templateID, name, header, footer, urlTemplate FROM templates WHERE templateID = ?")
+	if err != nil {
+		return ret, err
+	}
+	defer stmt.Close()
+
+	row := stmt.QueryRow(ID)
+	err = row.Scan(&ret.ID, &ret.Name, &ret.Header, &ret.Footer, &ret.UrlTemplate)
+	if err != nil {
+		return ret, err
+	}
+	return ret, nil
 }
 
 // DeleteTemplates deletes provided templateIDs from DB
@@ -79,4 +98,16 @@ func CreateNewTemplate(name, header, footer, urlTemplate string) error {
 		return err
 	}
 	return tx.Commit()
+}
+
+// UpdateTemplate overrides template in database
+func UpdateTemplate(updatedTemplate Template) error {
+	ut := updatedTemplate
+	stmt, err := database.DB.Prepare("UPDATE templates SET name = ?, header = ?, footer = ?, urlTemplate = ? WHERE templateID = ?")
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+	_, err = stmt.Exec(ut.Name, ut.Header, ut.Footer, ut.UrlTemplate, ut.ID)
+	return err
 }

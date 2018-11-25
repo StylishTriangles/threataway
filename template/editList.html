@@ -57,13 +57,15 @@
         </tr>
         {{range .Domains}}
         <tr>
-            <td><input type="checkbox" name="{{.ID}}"></td>
+            <td><input type="checkbox" name="{{.ID}}">
+                <!-- Icon made by https://www.freepik.com/ licensed by CC 3.0 BY -->
+                {{if (eq 1 .Dirty)}}&nbsp&nbsp<img src="/static/image/search.png" height="30" title="This domain's rating has changed and needs review">{{end}}</td>
             <td>{{.URL}}</td>
             <td>{{.Rating}}</td>
             <!-- Icon made by https://www.flaticon.com/authors/srip licensed by CC 3.0 BY -->
-            <td>{{if (ge .Rating  7.0)}}<img src="/static/image/safe.png" height="30" title="Secure">
-            <!-- Icon made by https://www.flaticon.com/authors/twitter licensed by CC 3.0 BY -->
-                {{else}}{{if (ge .Rating  4.0)}}<img src="/static/image/warning.png" height="30" title="Untrusted">
+            <td>{{if (ge .Rating 7.0)}}<img src="/static/image/safe.png" height="30" title="Secure">
+                <!-- Icon made by https://www.flaticon.com/authors/twitter licensed by CC 3.0 BY -->
+                {{else}}{{if (ge .Rating 4.0)}}<img src="/static/image/warning.png" height="30" title="Untrusted">
                 <!-- Icon made by https://www.flaticon.com/authors/maxim-basinski licensed by CC 3.0 BY -->
                 {{else}}<img src="/static/image/malicious.png" height="30" title="Malicious">{{end}}{{end}}
                 <!-- Icon made by https://www.freepik.com/ licensed by CC 3.0 BY -->
@@ -123,9 +125,9 @@
 {{end}}
 {{define "foot"}}
 <script>
-    {{ range .DomainsChecked }}
+    {{range.DomainsChecked}}
     $("input[name={{.ID}}]").prop("checked", true)
-    {{ end }}
+    {{end}}
 
     $("#button_save").on("click", function () {
         var checked_checkboxes = $("input:checked");

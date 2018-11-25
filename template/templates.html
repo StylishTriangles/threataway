@@ -188,11 +188,12 @@
 			template_id: template_id
 		};
 
-		$.post("/templates/edit_load", output, function (data) {
+		$.post("/templates/edit_load", output, function (data, status) {
+			data = JSON.parse(data)
 			$("#name-edit").val(data["name"]);
 			$("#header-edit").val(data["header"]);
 			$("#footer-edit").val(data["footer"]);
-			$("#urlTemplate-edit").val(["urlTemplate"]);
+			$("#urlTemplate-edit").val(data["urlTemplate"]);
 
 			actual_editing = template_id;
 
