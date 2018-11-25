@@ -16,7 +16,7 @@
 				<li class="nav-item">
 					<a class="nav-link" href="/domains">Domains</a>
 				</li>
-				<li class="nav-item active">
+				<li class="nav-item">
 					<a class="nav-link" href="/lists">Lists</a>
 				</li>
 				<li class="nav-item active">
@@ -50,10 +50,9 @@
 			<td>
 				<input type="checkbox" name="{{.ID}}">
 			<td>{{.Name}}</td>
-			<td>
-				<button class="btn">Edytuj</button>
-				<button class="btn">Usun</button>
-			</td>
+			<td>{{.Header}}</td>
+			<td>{{.Footer}}</td>
+			<td>{{.UrlTemplate}}</td>
 		</tr>
 		{{end}}
 	</table>
