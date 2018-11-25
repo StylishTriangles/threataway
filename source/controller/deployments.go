@@ -81,5 +81,5 @@ func deploymentsAdd(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), 500)
 		return
 	}
-	w.Write([]byte(fmt.Sprintf("Success publishing new list, it will be available at /l/%s", url)))
+	w.Write([]byte(fmt.Sprintf("Success publishing new list, it will be available at /d/%s", url)))
 }

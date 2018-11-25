@@ -8,7 +8,6 @@ import (
 	"log"
 	"net/http"
 	"strconv"
-	"strings"
 )
 
 func templatesHandler(w http.ResponseWriter, r *http.Request) {
@@ -89,17 +88,16 @@ func templateCreate(w http.ResponseWriter, r *http.Request) {
 	}
 
 	r.ParseForm()
-	name, ok_n := r.Form["name"]
-	header, ok_h := r.Form["header"]
-	footer, ok_f := r.Form["footer"]
-	urlTemplate, ok_u := r.Form["urlTemplate"]
-	if !(ok_n && ok_h && ok_f && ok_u) || name[0] == "" || !strings.Contains(urlTemplate[0], "{URL}") {
-		http.Error(w, "Invalid request", 500)
-		log.Println("Invalid request")
-		log.Println(r.Form)
+	name := r.FormValue("name")
+	header := r.FormValue("header")
+	footer := r.FormValue("footer")
+	urlTemplate := r.FormValue("urlTemplate")
+	if name == "" {
+		http.Error(w, "Name cannot be empty", 500)
 		return
 	}
-	err = templates.CreateNewTemplate(name[0], header[0], footer[0], urlTemplate[0])
+
+	err = templates.CreateNewTemplate(name, header, footer, urlTemplate)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		log.Println(err.Error())
