@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"gowebapp/source/view"
+	"threataway/source/view"
 	"net/http"
 )
 

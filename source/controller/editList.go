@@ -1,11 +1,11 @@
 package controller
 
 import (
-	"gowebapp/source/model/domain"
-	"gowebapp/source/model/lists"
-	"gowebapp/source/model/user"
-	"gowebapp/source/shared/database"
-	"gowebapp/source/view"
+	"threataway/source/model/domain"
+	"threataway/source/model/lists"
+	"threataway/source/model/user"
+	"threataway/source/shared/database"
+	"threataway/source/view"
 	"log"
 	"net/http"
 	"strconv"

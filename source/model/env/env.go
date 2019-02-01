@@ -1,7 +1,7 @@
 package env
 
 import (
-	"gowebapp/source/shared/database"
+	"threataway/source/shared/database"
 	"time"
 )
 

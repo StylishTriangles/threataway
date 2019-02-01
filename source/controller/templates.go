@@ -3,9 +3,9 @@ package controller
 import (
 	"encoding/json"
 	"fmt"
-	"gowebapp/source/model/templates"
-	"gowebapp/source/model/user"
-	"gowebapp/source/view"
+	"threataway/source/model/templates"
+	"threataway/source/model/user"
+	"threataway/source/view"
 	"log"
 	"net/http"
 	"strconv"

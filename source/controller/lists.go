@@ -2,9 +2,9 @@ package controller
 
 import (
 	"fmt"
-	"gowebapp/source/model/lists"
-	"gowebapp/source/model/user"
-	"gowebapp/source/view"
+	"threataway/source/model/lists"
+	"threataway/source/model/user"
+	"threataway/source/view"
 	"log"
 	"net/http"
 	"strconv"

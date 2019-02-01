@@ -1,7 +1,7 @@
 package domain
 
 import (
-	"gowebapp/source/shared/database"
+	"threataway/source/shared/database"
 )
 
 // Domain represents a single domain in database

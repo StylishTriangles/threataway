@@ -2,9 +2,9 @@ package controller
 
 import (
 	"fmt"
-	"gowebapp/source/model/user"
-	"gowebapp/source/model/validate"
-	"gowebapp/source/view"
+	"threataway/source/model/user"
+	"threataway/source/model/validate"
+	"threataway/source/view"
 	"log"
 	"net/http"
 	"strings"

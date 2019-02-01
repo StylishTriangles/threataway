@@ -1,7 +1,7 @@
 package lists
 
 import (
-	"gowebapp/source/shared/database"
+	"threataway/source/shared/database"
 	"log"
 	"sort"
 )

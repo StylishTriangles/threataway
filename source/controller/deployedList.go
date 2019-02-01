@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"regexp"
 
-	"gowebapp/source/shared/database"
+	"threataway/source/shared/database"
 
 	"github.com/gorilla/mux"
 )

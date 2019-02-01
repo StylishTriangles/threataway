@@ -4,9 +4,9 @@ import (
 	"log"
 	"net/http"
 
-	"gowebapp/source/model/user"
-	"gowebapp/source/shared/password"
-	"gowebapp/source/view"
+	"threataway/source/model/user"
+	"threataway/source/shared/password"
+	"threataway/source/view"
 )
 
 func loginGET(w http.ResponseWriter, r *http.Request) {

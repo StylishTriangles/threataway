@@ -22,7 +22,7 @@ secret-dir/*
 mysql_data/*
 
 #build
-gowebapp
+threataway
 
 #python
 __pycache__*

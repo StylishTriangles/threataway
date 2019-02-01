@@ -5,9 +5,9 @@ import (
 	"encoding/base64"
 	"encoding/gob"
 	"errors"
-	"gowebapp/source/shared/database"
-	"gowebapp/source/shared/email"
-	"gowebapp/source/shared/password"
+	"threataway/source/shared/database"
+	"threataway/source/shared/email"
+	"threataway/source/shared/password"
 	"time"
 )
 

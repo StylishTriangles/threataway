@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"gowebapp/source/model/domain"
-	"gowebapp/source/view"
+	"threataway/source/model/domain"
+	"threataway/source/view"
 	"net/http"
 
 	"github.com/gorilla/mux"

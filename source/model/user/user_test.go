@@ -1,9 +1,9 @@
 package user
 
 import (
-	"gowebapp/source/shared/database"
-	"gowebapp/source/shared/password"
-	"gowebapp/source/shared/testutil"
+	"threataway/source/shared/database"
+	"threataway/source/shared/password"
+	"threataway/source/shared/testutil"
 	"testing"
 )
 

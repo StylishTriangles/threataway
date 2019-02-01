@@ -1,7 +1,7 @@
 package deployments
 
 import (
-	"gowebapp/source/shared/database"
+	"threataway/source/shared/database"
 )
 
 // Deployment may contain one row from lists table

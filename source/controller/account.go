@@ -1,9 +1,9 @@
 package controller
 
 import (
-	"gowebapp/source/model/user"
-	"gowebapp/source/shared/password"
-	"gowebapp/source/view"
+	"threataway/source/model/user"
+	"threataway/source/shared/password"
+	"threataway/source/view"
 	"log"
 	"net/http"
 

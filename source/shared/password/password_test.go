@@ -1,7 +1,7 @@
 package password
 
 import (
-	"gowebapp/source/shared/testutil"
+	"threataway/source/shared/testutil"
 	"testing"
 )
 

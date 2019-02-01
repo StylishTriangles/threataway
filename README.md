@@ -14,12 +14,12 @@ Aby aplikacja dzialala, niezbedne jest srodowisko python 3 z blibliotekami:
 Projekt jest napisany w jezykach go (backend), mysql (baza danych) ,html5,css,js (frontend) i python (parsowanie stron z informacjami o niebezpieczenstwie). 
 Aby skompilwoac projekt nalezy wywolac komende 
 ```bash
-[admin@linux gowebapp]$ go build
+[admin@linux threataway]$ go build
 ```
 z katalogu glownego projektu. Należy mieć na uwadze, żeby GO_PATH kierowało na ten właśnie folder. 
 
 ## Uruchamianie
-Serwer uruchamia się ze zbudowanego pliku wykonywalnego gowebapp
+Serwer uruchamia się ze zbudowanego pliku wykonywalnego threataway
 ```bash
-[admin@linux gowebapp]$ ./gowebapp
+[admin@linux threataway]$ ./threataway
 ```

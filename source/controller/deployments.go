@@ -2,11 +2,11 @@ package controller
 
 import (
 	"fmt"
-	"gowebapp/source/model/deployments"
-	"gowebapp/source/model/lists"
-	"gowebapp/source/model/templates"
-	"gowebapp/source/model/user"
-	"gowebapp/source/view"
+	"threataway/source/model/deployments"
+	"threataway/source/model/lists"
+	"threataway/source/model/templates"
+	"threataway/source/model/user"
+	"threataway/source/view"
 	"log"
 	"net/http"
 	"regexp"

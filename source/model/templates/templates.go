@@ -1,6 +1,6 @@
 package templates
 
-import "gowebapp/source/shared/database"
+import "threataway/source/shared/database"
 
 // Template may contain one row from templates table
 type Template struct {
